@@ -12,7 +12,7 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFloating(true);
-    
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -45,7 +45,7 @@ export default function ContactSection() {
           <div className="col-lg-8 col-xl-7">
             <div className="text-center mb-5 reveal">
               <p className="section-eyebrow">Contact</p>
-              <h2 className="section-title">Let&apos;s Build Something<br />That Floats</h2>
+              <h2 style={{ color: 'var(--cyan)' }} className="section-title">Let&apos;s Build Something<br />That Scales</h2>
               <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem', marginTop: '1rem', lineHeight: 1.7 }}>
                 Whether you have a project in mind, a question, or just want to connect — I&apos;d love to hear from you.
               </p>

@@ -8,8 +8,8 @@ export async function POST(req) {
 
     if (!apiKey || apiKey === 'your_openai_api_key_here') {
       return NextResponse.json(
-        { message: "My brain isn't connected yet! Please add your actual OPENAI_API_KEY to the .env.local file and restart the server." },
-        { status: 500 }
+        { message: "Hello! I'm Daniel, an AI generalist and software developer. Don't worry, the bot isn't working right now because I haven't connected the paid API yet." },
+        { status: 200 }
       );
     }
 

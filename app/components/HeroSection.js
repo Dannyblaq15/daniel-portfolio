@@ -60,9 +60,9 @@ function spawnParticles(container) {
 
 // Animated headline letters
 function FloatingHeadline({ active }) {
-  const text = "Hi, I'm Daniel Lewis";
+  const text = "Hi, I'm < Daniel Lewis />";
   return (
-    <h1 className="hero-headline mb-4" aria-label={text}>
+    <h1 style={{ color: '#D85A21' }} className="hero-headline mb-4" aria-label={text}>
       {text.split('').map((ch, i) => (
         <span
           key={i}
@@ -86,7 +86,7 @@ function HexAvatar() {
   return (
     <img
       src="/daniel-photo.jpg"
-      alt=" AI Generalist & software developer"
+      alt="AI Generalist & software developer"
       style={{
         width: '100%',
         height: '100%',
@@ -202,7 +202,7 @@ export default function HeroSection() {
   }, [activateZeroG]);
 
   return (
-    <section id="hero" className="hero-section section-padding" style={{ paddingTop: 120 }}>
+    <section id="hero" className="hero-section section-padding">
       {/* Background orbs */}
       <div className="hero-bg-orb" style={{
         width: 500, height: 500,
@@ -223,15 +223,7 @@ export default function HeroSection() {
             <p className="hero-sub mb-5 reveal" style={{ animationDelay: '0.1s' }}>
               Beginner Software Developer &amp; AI Generalist.
             </p>
-            <div className="d-flex flex-wrap gap-3 reveal" style={{ animationDelay: '0.2s' }}>
-              <a
-                href="#work"
-                onClick={(e) => { e.preventDefault(); document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="magnetic-btn primary"
-                style={{ textDecoration: 'none' }}
-              >
-                View My Work ↓
-              </a>
+            <div className="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start reveal" style={{ animationDelay: '0.2s' }}>
               <a
                 href="#about"
                 onClick={(e) => { e.preventDefault(); document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }); }}

@@ -8,10 +8,10 @@ export default function Footer() {
       <div className="container">
         <div className="row align-items-center gy-4">
           <div className="col-md-4 text-center text-md-start">
-            <span className="navbar-brand-logo" style={{ fontSize: '0.95rem', letterSpacing: '0.2em' }}>
+            <span className="navbar-brand-logo" style={{ fontSize: '0.95rem', letterSpacing: '0.2em', color: 'var(--white)' }}>
               DANNYBLAQ
             </span>
-            <p className="footer-text mt-2 mb-0" style={{ fontSize: '0.75rem', color: 'var(--gray-600)' }}>
+            <p className="footer-text mt-2 mb-0" style={{ fontSize: '0.75rem', color: 'var(--white)', opacity: 0.7 }}>
               © {year} Daniel Lewis. All rights reserved.
             </p>
           </div>
@@ -20,19 +20,19 @@ export default function Footer() {
               {[
                 { label: 'GitHub', href: 'https://github.com/dannyblaq', icon: '⌥' },
                 { label: 'X', href: 'https://x.com/Marodtech', icon: '✕' },
-                { label: 'LinkedIn', href: '#', icon: '◈' },
-                { label: 'Email', href: 'mailto:daniel@anti-gravity.dev', icon: '✉' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-lewis-739635232/', icon: '◈' },
+                { label: 'Email', href: 'mailto:Lewisdaniel960@gmail.com', icon: '✉' },
               ].map(({ label, href, icon }) => (
                 <a
                   key={label}
                   href={href}
                   style={{
-                    color: 'var(--gray-400)', fontSize: '0.75rem', textDecoration: 'none',
+                    color: 'var(--white)', opacity: 0.8, fontSize: '0.75rem', textDecoration: 'none',
                     letterSpacing: '0.08em', display: 'flex', flexDirection: 'column',
-                    alignItems: 'center', gap: '0.25rem', transition: 'color 0.3s',
+                    alignItems: 'center', gap: '0.25rem', transition: 'color 0.3s, opacity 0.3s',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = '#D85A21')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = '#4B5563')}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--cyan)'; e.currentTarget.style.opacity = '1'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.opacity = '0.8'; }}
                   aria-label={label}
                 >
                   <span style={{ fontSize: '1.1rem' }}>{icon}</span>
@@ -42,7 +42,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="col-md-4 text-center text-md-end">
-            <p className="footer-text mb-0" style={{ color: 'var(--gray-600)', fontSize: '0.75rem' }}>
+            <p className="footer-text mb-0" style={{ color: 'var(--white)', opacity: 0.6, fontSize: '0.75rem' }}>
               ↑ Triple-tap logo for Developer Mode
             </p>
           </div>

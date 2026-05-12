@@ -266,7 +266,8 @@ function AIPromptFloat() {
 
 // ── 3. Code Orbit ─────────────────────────────────────────────────────────────
 const CODE_SNIPPETS = [
-  { id: 1, label: 'Anti-Gravity Hook', short: 'useAntiGravity()', color: 'var(--cyan)', code: `const useAntiGravity = (ref) => {
+  {
+    id: 1, label: 'Anti-Gravity Hook', short: 'useAntiGravity()', color: 'var(--cyan)', code: `const useAntiGravity = (ref) => {
   useEffect(() => {
     let raf;
     const animate = () => {
@@ -279,7 +280,8 @@ const CODE_SNIPPETS = [
     return () => cancelAnimationFrame(raf);
   }, [ref]);
 };` },
-  { id: 2, label: 'Particle Burst', short: 'spawnParticle()', color: 'var(--violet)', code: `const spawnParticles = (el) => {
+  {
+    id: 2, label: 'Particle Burst', short: 'spawnParticle()', color: 'var(--violet)', code: `const spawnParticles = (el) => {
   for (let i = 0; i < 20; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
@@ -290,7 +292,8 @@ const CODE_SNIPPETS = [
     setTimeout(() => p.remove(), 1000);
   }
 };` },
-  { id: 3, label: 'HUD Overlay', short: 'HUDOverlay()', color: '#555555', code: `const HUDOverlay = () => (
+  {
+    id: 3, label: 'HUD Overlay', short: 'HUDOverlay()', color: '#555555', code: `const HUDOverlay = () => (
   <div className="hud">
     <div className="corner tl" />
     <div className="corner tr" />
@@ -396,9 +399,9 @@ function QuantumDataStream() {
     for (let x = 0; x < columns; x++) drops[x] = 1;
 
     let frame = 0;
-    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const fadeColor = isDark ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)';
     const animate = () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const fadeColor = isDark ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)';
       ctx.fillStyle = fadeColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -425,7 +428,7 @@ function QuantumDataStream() {
   }, []);
 
   return (
-    <div className="lab-canvas-wrap" style={{ height: 280 }}>
+    <div className="lab-canvas-wrap" style={{ height: 280, background: 'var(--bg-primary)' }}>
       <div className="lab-canvas-label">QUANTUM DATA STREAM</div>
       <canvas ref={canvasRef} style={{ width: '100%', height: '100%', display: 'block' }} />
     </div>
@@ -462,7 +465,7 @@ function ChatbotExperiment() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: newMessages }),
       });
-      
+
       const data = await response.json();
       setMessages([...newMessages, { role: 'assistant', content: data.message }]);
     } catch (err) {
@@ -475,7 +478,7 @@ function ChatbotExperiment() {
   return (
     <div className="lab-canvas-wrap" style={{ height: 280, display: 'flex', flexDirection: 'column' }}>
       <div className="lab-canvas-label" style={{ zIndex: 10 }}>AI CHATBOT</div>
-      
+
       <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', paddingTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: 'flex', gap: '0.5rem', alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', maxWidth: '85%' }}>
@@ -531,7 +534,7 @@ export default function LabSection() {
       <div className="container">
         <div className="text-center mb-5 reveal">
           <p className="section-eyebrow">Experiments</p>
-          <h2 className="section-title">The Lab</h2>
+          <h2 style={{ color: 'var(--cyan)' }} className="section-title">The Lab</h2>
           <p style={{ color: 'var(--gray-600)', fontSize: '0.95rem', maxWidth: 480, margin: '1rem auto 0' }}>
             Interactive playgrounds where AI meets code meets physics.
           </p>
@@ -542,7 +545,7 @@ export default function LabSection() {
           <div className="col-12 col-lg-6 reveal" style={{ animationDelay: '0.1s' }}>
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>🧠</span>
-              <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Neural Gravity Simulator</span>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>Neural Gravity Simulator</span>
               <span className="tech-pill">Canvas API</span>
             </div>
             <NeuralGravitySimulator />
@@ -552,7 +555,7 @@ export default function LabSection() {
           <div className="col-12 col-lg-6 reveal" style={{ animationDelay: '0.2s' }}>
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>✨</span>
-              <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>AI Prompt Float</span>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>AI Prompt Float</span>
               <span className="tech-pill">Web Animations</span>
             </div>
             <AIPromptFloat />
@@ -562,7 +565,7 @@ export default function LabSection() {
           <div className="col-12 col-lg-6 reveal" style={{ animationDelay: '0.3s' }}>
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>💻</span>
-              <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Code Orbit</span>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>Code Orbit</span>
               <span className="tech-pill">CSS Animations</span>
             </div>
             <CodeOrbit />
@@ -572,7 +575,7 @@ export default function LabSection() {
           <div className="col-12 col-lg-6 reveal" style={{ animationDelay: '0.4s' }}>
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>🌊</span>
-              <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Quantum Data Stream</span>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>Quantum Data Stream</span>
               <span className="tech-pill">Canvas Rain</span>
             </div>
             <QuantumDataStream />
@@ -582,7 +585,7 @@ export default function LabSection() {
           <div className="col-12 col-lg-6 reveal" style={{ animationDelay: '0.5s' }}>
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>🤖</span>
-              <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Daniel AI</span>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>Daniel AI</span>
               <span className="tech-pill">ChatGPT API</span>
             </div>
             <ChatbotExperiment />

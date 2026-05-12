@@ -16,7 +16,6 @@ const SKILLS = [
   { id: 6, icon: '✨', name: 'Generative AI', category: 'AI/ML' },
   { id: 7, icon: '🗄️', name: 'Databases / SQL', category: 'Backend' },
   { id: 8, icon: '🔧', name: 'REST APIs', category: 'Backend' },
-  { id: 9, icon: '📊', name: 'Data Analysis', category: 'AI/ML' },
   { id: 10, icon: '🐳', name: 'Git / DevOps', category: 'Tools' },
   { id: 11, icon: '🎨', name: 'HTML / CSS', category: 'Frontend' },
   { id: 12, icon: '🏗️', name: 'Systems Design', category: 'Tools' },
@@ -145,7 +144,7 @@ export default function SkillsSection() {
       <div className="container">
         <div className="text-center mb-5 reveal">
           <p className="section-eyebrow">Capabilities</p>
-          <h2 className="section-title">Skills & Tools</h2>
+          <h2 style={{ color: 'var(--cyan)' }} className="section-title">Skills & Tools</h2>
           <p style={{ color: 'var(--gray-600)', fontSize: '0.85rem', marginTop: '0.75rem', letterSpacing: '0.05em' }}>
             Double-click any skill to watch it defy gravity ↑
           </p>

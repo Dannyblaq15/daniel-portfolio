@@ -29,6 +29,12 @@
   --glow-violet: 0 0 40px rgba(139, 69, 19, 0.3);
 }
 
+[data-theme="dark"] .hero-section,
+[data-theme="dark"] #about,
+[data-theme="dark"] .footer {
+  background-color: #000000 !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -77,7 +83,7 @@ body {
 }
 
 .section-padding {
-  padding: 120px 0;
+  padding: 60px 0;
 }
 
 /* ── Animations ── */
@@ -705,6 +711,7 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden;
+  padding: 80px 0;
 }
 
 .hero-bg-orb {
@@ -716,17 +723,43 @@ body {
 }
 
 .hero-headline {
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
 }
 
 .hero-sub {
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: var(--gray-400);
-  letter-spacing: 0.15em;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  color: var(--white);
+  opacity: 0.8;
+  letter-spacing: 0.1em;
   font-weight: 400;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+  
+  .hero-headline {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+    white-space: normal;
+    word-break: keep-all;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-sub {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* ── Hexagonal Photo Frame ── */
