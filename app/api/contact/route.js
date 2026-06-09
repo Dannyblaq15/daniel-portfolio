@@ -7,7 +7,7 @@ export async function POST(request) {
 
     // Send email via Resend if API key is set
     if (process.env.RESEND_API_KEY) {
-      await fetch('https://api.resend.com/emails', {
+      const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
@@ -15,7 +15,7 @@ export async function POST(request) {
         },
         body: JSON.stringify({
           from: 'Portfolio Contact <onboarding@resend.dev>',
-          to: 'dl5357742@gmail.com',
+          to: 'lewisdaniel960@gmail.com',
           subject: `New Portfolio Message: ${subject || 'No Subject'}`,
           html: `
             <h3>New Portfolio Submission</h3>
@@ -27,6 +27,13 @@ export async function POST(request) {
           `,
         }),
       });
+      console.log('Resend response status:', emailRes.status);
+      const emailResText = await emailRes.text();
+      console.log('Resend response body:', emailResText);
+      if (!emailRes.ok) {
+        console.error('Resend API error:', emailResText);
+        return NextResponse.json({ success: false, error: 'Email sending failed' }, { status: 502 });
+      }
     }
 
     return NextResponse.json({ success: true, message: 'Message processed successfully' }, { status: 200 });
