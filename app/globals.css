@@ -83,7 +83,7 @@ body {
 }
 
 .section-padding {
-  padding: 60px 0;
+  padding: 45px 0;
 }
 
 /* ── Animations ── */
@@ -774,8 +774,9 @@ body {
 
 .hex-frame-outer {
   position: relative;
-  width: 460px;
-  height: 680px;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 460 / 680;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1368,13 +1369,11 @@ body {
 /* ── Responsive tweaks ── */
 @media (max-width: 768px) {
   .section-padding {
-    padding: 80px 0;
+    padding: 35px 0;
   }
 
   .hex-frame-outer {
-    width: 340px;
-    height: 500px;
-    max-width: 90vw;
+    max-width: 300px;
   }
 
   .hero-headline {

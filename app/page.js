@@ -3,21 +3,14 @@
 import PortfolioShell from './components/PortfolioShell';
 
 export const metadata = {
-  title: 'Daniel Lewis | ANTI-GRAVITY — AI Generalist & Programmer',
+  title: 'Daniel Lewis — Software Developer & React Native Developer',
   description:
-    "Daniel Lewis — AI generalist building with Python & JavaScript. Turning ideas into real, working systems.",
-  keywords: ['Daniel Lewis', 'DANNYBLAQ', 'Marodtech', 'AI Generalist', 'Python', 'JavaScript', 'Full-Stack', 'Portfolio', 'ANTI-GRAVITY'],
+    "Daniel Lewis — Software Developer based in Lagos, Nigeria. Building responsive web and mobile applications with JavaScript and React Native. Currently training as a Huawei Native Developer.",
+  keywords: ['Daniel Lewis', 'Dannyblaq15', 'Software Developer', 'React Native Developer', 'Lagos', 'Nigeria', 'JavaScript', 'Portfolio'],
   openGraph: {
-    title: 'Daniel Lewis | ANTI-GRAVITY',
-    description: 'AI generalist building with Python & JavaScript. Turning ideas into real, working systems.',
+    title: 'Daniel Lewis | Portfolio',
+    description: "Software Developer & React Native Developer based in Lagos, Nigeria. Building web and mobile apps with JavaScript and React Native.",
     type: 'website',
-    url: 'https://anti-gravity.dev',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Daniel Lewis | ANTI-GRAVITY',
-    description: 'AI generalist building with Python & JavaScript.',
-    creator: '@Marodtech',
   },
 };
 

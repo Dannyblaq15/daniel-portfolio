@@ -6,6 +6,7 @@ import LabSection from './LabSection';
 import SkillsSection from './SkillsSection';
 import AboutSection from './AboutSection';
 import ContactSection from './ContactSection';
+import ProjectsSection from './ProjectsSection';
 import Footer from './Footer';
 import DevModeModal, { useDevMode } from './DevModeModal';
 
@@ -88,9 +89,10 @@ export default function PortfolioShell() {
       <Navbar onLogoDoubleClick={triggerAntiGravity} onLogoClick={handleLogoCombined} />
       <main id="main-content">
         <HeroSection />
-        <LabSection />
+        <ProjectsSection />
         <SkillsSection />
         <AboutSection />
+        <LabSection />
         <ContactSection />
       </main>
       <Footer />

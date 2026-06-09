@@ -221,7 +221,8 @@ export default function HeroSection() {
           <div className="col-lg-7 order-lg-1 order-2">
             <FloatingHeadline active={letterAnimate} />
             <p className="hero-sub mb-5 reveal" style={{ animationDelay: '0.1s' }}>
-              Beginner Software Developer &amp; AI Generalist.
+              Software Developer | React Native Developer.<br />
+              Building responsive web and mobile applications with a focus on clean design, performance, and user experience.
             </p>
             <div className="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start reveal" style={{ animationDelay: '0.2s' }}>
               <a
@@ -290,7 +291,7 @@ export default function HeroSection() {
                 textAlign: 'center', fontSize: '0.75rem', letterSpacing: '0.2em',
                 color: 'var(--cyan)', fontWeight: 800, textTransform: 'uppercase'
               }}>
-                DANIEL LEWIS // AI GENERALIST & SYSTEMS BUILDER
+                DANIEL LEWIS // SOFTWARE & REACT NATIVE DEVELOPER
               </div>
             </div>
 

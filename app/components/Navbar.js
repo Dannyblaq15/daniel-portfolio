@@ -4,7 +4,9 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 // Nav links config
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
-  { label: 'Lab', href: '#lab' }, 
+  { label: 'Projects', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Lab', href: '#lab' },
   { label: 'Contact', href: '#contact' },
 ];
 

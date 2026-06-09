@@ -18,10 +18,10 @@ export default function Footer() {
           <div className="col-md-4 text-center">
             <div className="d-flex justify-content-center gap-4">
               {[
-                { label: 'GitHub', href: 'https://github.com/dannyblaq', icon: '⌥' },
+                { label: 'GitHub', href: 'https://github.com/Dannyblaq15', icon: '⌥' },
                 { label: 'X', href: 'https://x.com/Marodtech', icon: '✕' },
                 { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-lewis-739635232/', icon: '◈' },
-                { label: 'Email', href: 'mailto:Lewisdaniel960@gmail.com', icon: '✉' },
+                { label: 'Email', href: 'mailto:dl5357742@gmail.com', icon: '✉' },
               ].map(({ label, href, icon }) => (
                 <a
                   key={label}

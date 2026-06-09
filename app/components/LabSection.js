@@ -437,7 +437,7 @@ function QuantumDataStream() {
 
 // ── 5. AI Chatbot Integration ──────────────────────────────────────────
 function ChatbotExperiment() {
-  const [messages, setMessages] = useState([{ role: 'assistant', content: "Hi, I am Daniel's AI assistant. Ask me anything!" }]);
+  const [messages, setMessages] = useState([{ role: 'assistant', content: "Hi! I'm Daniel's assistant. He's a Software Developer & React Native Developer based in Lagos, Nigeria. Ask me anything about his work!" }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);

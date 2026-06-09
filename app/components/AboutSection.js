@@ -2,12 +2,29 @@
 
 const TIMELINE = [
   {
-    year: '2024 — Present',
-    role: 'AI Generalist & Full-Stack Developer',
+    year: '2022 — Present',
+    role: 'Software Developer',
     place: 'Freelance / Independent',
-    desc: 'Building AI-powered applications and full-stack systems using Python and JavaScript. Exploring the intersection of software development and engineering to deliver real, working products.',
+    desc: 'Built and maintained web and mobile applications. Developed responsive user interfaces, integrated REST APIs, fixed application issues, and deployed projects managing code with Git and GitHub.',
   },
-
+  {
+    year: 'Internship',
+    role: 'Software Developer Intern',
+    place: 'Industry Experience',
+    desc: 'Assisted in software development and testing. Worked on frontend features and bug fixes. Collaborated with developers on real-world projects.',
+  },
+  {
+    year: '2022',
+    role: 'National Diploma — Mechanical Engineering',
+    place: 'Delta State Polytechnic, Otefe-Oghara',
+    desc: 'Completed an ND in Mechanical Engineering, building strong analytical and problem-solving foundations that carry into software development.',
+  },
+  {
+    year: 'In Training',
+    role: 'Huawei Native Developer',
+    place: 'Huawei Developer Program',
+    desc: 'Currently undergoing Huawei Native Developer training, expanding expertise in mobile ecosystem development.',
+  },
 ];
 
 export default function AboutSection() {
@@ -22,24 +39,15 @@ export default function AboutSection() {
             <p style={{
               fontSize: '1.05rem', color: 'var(--white)', opacity: 0.85, lineHeight: 1.8, marginBottom: '1.5rem',
             }}>
-              I&apos;m an aspiring Software Developer and AI Generalist based in Lagos. I’m currently focused on developing my skills in programming, web development, artificial intelligence, and automation technologies.
-
-              My passion for technology comes from a desire to create smart, useful, and innovative solutions that improve how people interact with digital systems. I enjoy learning new tools, building projects, and exploring how AI can be integrated into modern applications.
-
-              As a beginner developer, I value consistency, curiosity, and continuous improvement. Every project I build helps me strengthen my understanding of software engineering principles and real-world development practices.
-
-              I’m actively growing in areas such as:
-
-              Frontend development
-              Backend development
-              Artificial intelligence tools
-              Prompt engineering
-              Automation systems
-              API integration
-              Modern web technologies
-              Problem-solving with code
-
-              My long-term goal is to become a highly skilled developer capable of building intelligent and impactful technology products.
+              I&apos;m <strong>Daniel Lewis</strong>, a Software Developer based in Lagos, Nigeria. I build web and mobile
+              applications using JavaScript and React Native. I enjoy creating simple, user-friendly solutions
+              and continuously improving my development skills.
+            </p>
+            <p style={{
+              fontSize: '1.05rem', color: 'var(--white)', opacity: 0.85, lineHeight: 1.8, marginBottom: '1.5rem',
+            }}>
+              Currently training as a <strong style={{ color: 'var(--cyan)' }}>Huawei Native Developer</strong>,
+              deepening my expertise in mobile ecosystem development.
             </p>
 
             {/* Stats */}
@@ -47,8 +55,8 @@ export default function AboutSection() {
               {[
                 { n: '2+', label: 'Years Building' },
                 { n: '5+', label: 'Projects Shipped' },
-                { n: 'AI', label: 'Generalist' },
-                { n: '∞', label: 'Ideas to Ship' },
+                { n: 'RN', label: 'React Native' },
+                { n: '∞', label: 'Ideas to Build' },
               ].map(({ n, label }) => (
                 <div key={label} className="col-6">
                   <div className="glass" style={{ borderRadius: 14, padding: '1rem' }}>

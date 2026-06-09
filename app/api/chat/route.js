@@ -8,7 +8,7 @@ export async function POST(req) {
 
     if (!apiKey || apiKey === 'your_openai_api_key_here') {
       return NextResponse.json(
-        { message: "Hello! I'm Daniel, an AI generalist and software developer. Don't worry, the bot isn't working right now because I haven't connected the paid API yet." },
+        { message: "Hi! I'm Daniel's portfolio assistant. Daniel is a Software Developer based in Lagos, Nigeria, specialising in JavaScript and React Native. The AI chat isn't connected yet, but feel free to reach out at dl5357742@gmail.com!" },
         { status: 200 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(req) {
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
         messages: [
-          { role: 'system', content: 'You are Daniel, an AI generalist and developer. You are helpful, concise, and professional. Keep your responses short.' },
+          { role: 'system', content: 'You are an assistant for Daniel Lewis, a Software Developer and React Native Developer based in Lagos, Nigeria. He builds web and mobile apps using JavaScript, React Native, HTML, CSS and REST APIs. He also does Graphic Design (Photoshop, Canva). He is currently training as a Huawei Native Developer. Contact: dl5357742@gmail.com | GitHub: github.com/Dannyblaq15 | LinkedIn: linkedin.com/in/daniel-lewis-739635232. Be helpful, concise and professional. Keep responses short.' },
           ...messages
         ],
         max_tokens: 150,

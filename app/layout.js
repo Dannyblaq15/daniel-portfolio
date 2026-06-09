@@ -1,19 +1,19 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Daniel Lewis — AI Generalist & Software developer',
+  title: 'Daniel Lewis — Software Developer & React Native Developer',
   description:
-    "Daniel Lewis — AI generalist building with Python & JavaScript. Turning ideas into real, working systems. Exploring the space between software and engineering.",
+    "Daniel Lewis — Software Developer based in Lagos, Nigeria. Building responsive web and mobile applications with JavaScript and React Native. Currently training as a Huawei Native Developer.",
   openGraph: {
-    title: 'Daniel Lewis | ANTI-GRAVITY',
-    description: "AI generalist building with Python & JavaScript. Turning ideas into real, working systems.",
+    title: 'Daniel Lewis | Portfolio',
+    description: "Software Developer & React Native Developer based in Lagos, Nigeria. Building web and mobile apps with JavaScript and React Native.",
     type: 'website',
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Bootstrap CSS */}
         <link

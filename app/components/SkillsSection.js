@@ -8,17 +8,18 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 // ──────────────────────────────────────────────────────────────────────────────
 
 const SKILLS = [
-  { id: 1, icon: '🐍', name: 'Python', category: 'Backend' },
-  { id: 2, icon: '⚡', name: 'JavaScript', category: 'Frontend' },
-  { id: 3, icon: '🤖', name: 'AI / LLMs', category: 'AI/ML' },
-  { id: 4, icon: '⚛️', name: 'React / Next.js', category: 'Frontend' },
-  { id: 5, icon: '🌐', name: 'Node.js', category: 'Backend' },
-  { id: 6, icon: '✨', name: 'Generative AI', category: 'AI/ML' },
-  { id: 7, icon: '🗄️', name: 'Databases / SQL', category: 'Backend' },
-  { id: 8, icon: '🔧', name: 'REST APIs', category: 'Backend' },
-  { id: 10, icon: '🐳', name: 'Git / DevOps', category: 'Tools' },
-  { id: 11, icon: '🎨', name: 'HTML / CSS', category: 'Frontend' },
-  { id: 12, icon: '🏗️', name: 'Systems Design', category: 'Tools' },
+  { id: 1, icon: '⚡', name: 'JavaScript', category: 'Frontend' },
+  { id: 2, icon: '📱', name: 'React Native', category: 'Frontend' },
+  { id: 3, icon: '🌐', name: 'HTML5', category: 'Frontend' },
+  { id: 4, icon: '🎨', name: 'CSS3', category: 'Frontend' },
+  { id: 5, icon: '📐', name: 'Responsive Design', category: 'Frontend' },
+  { id: 6, icon: '🔧', name: 'REST APIs', category: 'Backend' },
+  { id: 12, icon: '🟢', name: 'Node.js', category: 'Backend' },
+  { id: 7, icon: '🐳', name: 'Git & GitHub', category: 'Tools' },
+  { id: 8, icon: '🚀', name: 'Vercel', category: 'Tools' },
+  { id: 9, icon: '❖', name: 'Figma', category: 'Design' },
+  { id: 10, icon: '🖌️', name: 'Adobe Photoshop', category: 'Design' },
+  { id: 11, icon: '✏️', name: 'Canva', category: 'Design' },
 ];
 
 function FloatingSkill({ skill, onDone }) {
