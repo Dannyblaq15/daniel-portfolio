@@ -1,6 +1,26 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
 import path from 'path';
+import { kv } from '@vercel/kv';
+
+const counterFile = path.join(process.cwd(), 'public', 'ebook', 'download-count.json');
+
+function incrementDownloadCount() {
+  try {
+    let count = 0;
+    if (!fs.existsSync(path.dirname(counterFile))) {
+      fs.mkdirSync(path.dirname(counterFile), { recursive: true });
+    }
+    if (fs.existsSync(counterFile)) {
+      const data = fs.readFileSync(counterFile, 'utf-8');
+      const parsed = JSON.parse(data);
+      count = parsed.count || 0;
+    }
+    const newData = { count: count + 1 };
+    fs.writeFileSync(counterFile, JSON.stringify(newData, null, 2));
+  } catch (e) {
+    console.error('Failed to increment ebook download count', e);
+  }
+}
 
 export async function POST(request) {
   try {
@@ -16,16 +36,13 @@ export async function POST(request) {
     }
 
     // ── 1. Log to local file (always works) ───────────────────────────────────
-    const logsDir = path.join(process.cwd(), 'ebook-leads');
-    if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
-
-    const logFile = path.join(logsDir, 'leads.json');
-    let leads = [];
-    if (fs.existsSync(logFile)) {
-      try { leads = JSON.parse(fs.readFileSync(logFile, 'utf-8')); } catch {}
+    // Store lead in Vercel KV (list) and increment download count
+    try {
+      await kv.lpush('ebook_leads', JSON.stringify({ name, email, downloadedAt: new Date().toISOString() }));
+      await kv.incr('ebook_downloads');
+    } catch (e) {
+      console.warn('KV operation failed:', e);
     }
-    leads.push({ name, email, downloadedAt: new Date().toISOString() });
-    fs.writeFileSync(logFile, JSON.stringify(leads, null, 2));
 
     // ── 2. Send notification email via Resend (production) ───────────────────
     const apiKey = process.env.RESEND_API_KEY;
@@ -64,5 +81,14 @@ export async function POST(request) {
   } catch (err) {
     console.error('Ebook API error:', err);
     return NextResponse.json({ error: 'Something went wrong. Please try again.' }, { status: 500 });
+  }
+}
+export async function GET(request) {
+  try {
+    const count = await kv.get('ebook_downloads');
+    return NextResponse.json({ count: Number(count) || 0 }, { status: 200 });
+  } catch (err) {
+    console.error('Ebook count fetch error:', err);
+    return NextResponse.json({ error: 'Unable to fetch count' }, { status: 500 });
   }
 }
