@@ -52,7 +52,7 @@ export default function BookSection() {
       // Trigger download
       const a = document.createElement('a');
       a.href = data.downloadUrl;
-      a.download = 'Marod-Tech-Handbook.pdf';
+      a.download = 'Marod-Tech-Handbook.docx';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -310,7 +310,7 @@ export default function BookSection() {
                   <img src="/book-cover.png" alt="Book" style={{ width: 48, borderRadius: 4, flexShrink: 0 }} />
                   <div>
                     <p style={{ color: 'var(--white)', fontWeight: 700, fontSize: '0.82rem', margin: 0 }}>The Marod Tech Handbook</p>
-                    <p style={{ color: 'var(--gray-600)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>Building Smarter Solutions · PDF</p>
+                    <p style={{ color: 'var(--gray-600)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>Building Smarter Solutions · DOCX</p>
                   </div>
                 </div>
 
@@ -378,7 +378,7 @@ export default function BookSection() {
                       boxShadow: '0 6px 24px rgba(216,90,33,0.35)',
                     }}
                   >
-                    {status === 'loading' ? '⏳ Processing...' : '📥 Download Free PDF'}
+                    {status === 'loading' ? '⏳ Processing...' : '📥 Download Free Copy'}
                   </button>
                   <p style={{ fontSize: '0.68rem', color: 'var(--gray-600)', textAlign: 'center', margin: 0 }}>
                     🔒 No spam. Your email is safe with us.

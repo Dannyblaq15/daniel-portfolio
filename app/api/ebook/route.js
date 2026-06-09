@@ -58,7 +58,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       success: true,
-      downloadUrl: '/ebook/marod-tech-handbook.pdf',
+      downloadUrl: '/ebook/marod-tech-handbook.docx',
       message: 'Access granted!',
     });
   } catch (err) {
