@@ -8,7 +8,6 @@ const NAV_LINKS = [
   { label: '📘 Handbook', href: '#book' },
   { label: 'Skills', href: '#skills' },
   { label: 'Lab', href: '#lab' },
-  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
