@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
-import { kv } from '@vercel/kv';
 
 export async function POST(request) {
   try {
     const data = await request.json();
     const { name, email, subject, message } = data;
 
-    // 1. Send email via Resend if API key present
+    // Send email via Resend if API key is set
     if (process.env.RESEND_API_KEY) {
       await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -29,13 +27,6 @@ export async function POST(request) {
           `,
         }),
       });
-    }
-
-    // 2. Store lead in Vercel KV (list)
-    try {
-      await kv.lpush('contact_leads', JSON.stringify({ name, email, subject, message, timestamp: new Date().toISOString() }));
-    } catch (kvErr) {
-      console.warn('KV contact lead store failed:', kvErr);
     }
 
     return NextResponse.json({ success: true, message: 'Message processed successfully' }, { status: 200 });
