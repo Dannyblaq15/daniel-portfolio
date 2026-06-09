@@ -4,6 +4,12 @@ export const metadata = {
   title: 'Daniel Lewis — Software Developer & React Native Developer',
   description:
     "Daniel Lewis — Software Developer based in Lagos, Nigeria. Building responsive web and mobile applications with JavaScript and React Native. Currently training as a Huawei Native Developer.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json',
   openGraph: {
     title: 'Daniel Lewis | Portfolio',
     description: "Software Developer & React Native Developer based in Lagos, Nigeria. Building web and mobile apps with JavaScript and React Native.",
@@ -38,11 +44,7 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
-        <meta name="theme-color" content="#0A0A0A" />
-        {/* Favicon & PWA icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#D85A21" />
       </head>
       <body>
         {children}
