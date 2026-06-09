@@ -18,6 +18,26 @@ const PROJECTS = [
     color: '#D85A21',
     status: 'Live',
     github: 'https://github.com/Dannyblaq15',
+    demo: null, // Add your live URL here when available e.g. 'https://wahala-tracker.vercel.app'
+  },
+  {
+    id: 2,
+    emoji: '📱',
+    title: 'HMS Health Connect',
+    subtitle: 'HarmonyOS Mobile App',
+    description:
+      'A HarmonyOS mobile application built during my Huawei Native Developer training, integrating Huawei Mobile Services (HMS) kits including Account, Health data, and Push Notification APIs.',
+    features: [
+      'HMS Account Kit',
+      'Health Data APIs',
+      'Push Notifications',
+      'HarmonyOS Native UI',
+    ],
+    tech: ['HarmonyOS', 'HMS Kits', 'Java', 'Push Kit', 'Health Kit'],
+    color: '#C3162D',
+    status: 'In Progress',
+    github: 'https://github.com/Dannyblaq15',
+    demo: null,
   },
 ];
 
@@ -35,7 +55,7 @@ export default function ProjectsSection() {
 
         <div className="row justify-content-center g-4">
           {PROJECTS.map((project, i) => (
-            <div key={project.id} className="col-lg-8 reveal" style={{ animationDelay: `${i * 0.1}s` }}>
+            <div key={project.id} className="col-lg-10 reveal" style={{ animationDelay: `${i * 0.15}s` }}>
               <div
                 className="glass"
                 style={{
@@ -83,7 +103,7 @@ export default function ProjectsSection() {
                             borderRadius: 999, padding: '0.15rem 0.6rem',
                             fontSize: '0.6rem', color: project.color, fontWeight: 700, letterSpacing: '0.1em',
                           }}>
-                            ● {project.status}
+                            {project.status === 'Live' ? '● ' : '◌ '}{project.status}
                           </span>
                         </div>
                         <p style={{ fontSize: '0.78rem', color: 'var(--gray-600)', margin: 0, marginTop: '0.15rem', letterSpacing: '0.05em' }}>
@@ -103,16 +123,44 @@ export default function ProjectsSection() {
                       ))}
                     </div>
 
-                    {/* CTA */}
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="magnetic-btn secondary"
-                      style={{ fontSize: '0.82rem', textDecoration: 'none', display: 'inline-block' }}
-                    >
-                      View on GitHub ↗
-                    </a>
+                    {/* CTAs */}
+                    <div className="d-flex flex-wrap gap-3 align-items-center">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="magnetic-btn secondary"
+                        style={{ fontSize: '0.82rem', textDecoration: 'none', display: 'inline-block' }}
+                      >
+                        View on GitHub ↗
+                      </a>
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            fontSize: '0.82rem', textDecoration: 'none', display: 'inline-flex',
+                            alignItems: 'center', gap: '0.4rem',
+                            background: `linear-gradient(135deg, ${project.color}, #8B4513)`,
+                            color: '#fff', fontWeight: 700, padding: '0.55rem 1.2rem',
+                            borderRadius: 999, letterSpacing: '0.04em',
+                            boxShadow: `0 4px 16px ${project.color}44`,
+                            transition: 'transform 0.2s, box-shadow 0.2s',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                            e.currentTarget.style.boxShadow = `0 8px 24px ${project.color}66`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = '';
+                            e.currentTarget.style.boxShadow = `0 4px 16px ${project.color}44`;
+                          }}
+                        >
+                          🚀 Live Demo
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   {/* Right: Features */}

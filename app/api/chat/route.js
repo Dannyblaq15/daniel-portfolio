@@ -8,7 +8,7 @@ export async function POST(req) {
 
     if (!apiKey || apiKey === 'your_openai_api_key_here') {
       return NextResponse.json(
-        { message: "Hi! I'm Daniel's portfolio assistant. Daniel is a Software Developer based in Lagos, Nigeria, specialising in JavaScript and React Native. The AI chat isn't connected yet, but feel free to reach out at dl5357742@gmail.com!" },
+        { message: "Hi! I'm Daniel's portfolio assistant. Daniel is a Software & React Native Developer based in Lagos, Nigeria. He built the 'Wahala Tracker' (an issue tracker web app) and is currently training as a Huawei Native Developer, building 'HMS Health Connect' for HarmonyOS. Feel free to contact him at dl5357742@gmail.com!" },
         { status: 200 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(req) {
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
         messages: [
-          { role: 'system', content: 'You are an assistant for Daniel Lewis, a Software Developer and React Native Developer based in Lagos, Nigeria. He builds web and mobile apps using JavaScript, React Native, HTML, CSS and REST APIs. He also does Graphic Design (Photoshop, Canva). He is currently training as a Huawei Native Developer. Contact: dl5357742@gmail.com | GitHub: github.com/Dannyblaq15 | LinkedIn: linkedin.com/in/daniel-lewis-739635232. Be helpful, concise and professional. Keep responses short.' },
+          { role: 'system', content: 'You are an assistant for Daniel Lewis, a Software Developer and React Native Developer based in Lagos, Nigeria. He builds web and mobile apps using JavaScript, React Native, Node.js, HTML, CSS and REST APIs. He has skills in UI/UX Design (Figma, Photoshop, Canva). He is currently training as a Huawei Native Developer. His featured projects include: 1) "Wahala Tracker" (an issue tracking web app built with JavaScript/HTML/CSS deployed on Vercel) and 2) "HMS Health Connect" (a HarmonyOS mobile app integrating HMS Kits like Account, Health, and Push). Contact: dl5357742@gmail.com | GitHub: github.com/Dannyblaq15 | LinkedIn: linkedin.com/in/daniel-lewis-739635232. Be helpful, concise and professional. Keep responses short.' },
           ...messages
         ],
         max_tokens: 150,
