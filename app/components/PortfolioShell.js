@@ -7,6 +7,7 @@ import SkillsSection from './SkillsSection';
 import AboutSection from './AboutSection';
 import ContactSection from './ContactSection';
 import ProjectsSection from './ProjectsSection';
+import BookSection from './BookSection';
 import Footer from './Footer';
 import DevModeModal, { useDevMode } from './DevModeModal';
 
@@ -90,6 +91,7 @@ export default function PortfolioShell() {
       <main id="main-content">
         <HeroSection />
         <ProjectsSection />
+        <BookSection />
         <SkillsSection />
         <AboutSection />
         <LabSection />
