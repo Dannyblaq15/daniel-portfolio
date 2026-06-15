@@ -1,40 +1,62 @@
 'use client';
 import { useState, useRef } from 'react';
 
-const FEATURES = [
-  { icon: '</>',  label: 'Custom Software Development' },
-  { icon: '🧠',  label: 'AI & Intelligent Solutions' },
-  { icon: '📈',  label: 'Digital Innovation & Business Growth' },
-];
-
-const CHAPTERS = [
-  'Introduction to Modern Tech Architecture',
-  'Building Scalable Custom Software',
-  'AI Integration for Business Leaders',
-  'Securing Your Digital Infrastructure',
-  'Driving ROI Through Digital Transformation',
+const BOOKS = [
+  {
+    id: 'marod-tech',
+    title: 'The Marod Tech Handbook',
+    eyebrow: '📘 Free Resource',
+    tagline: 'INNOVATE · SECURE · TRANSFORM',
+    subtitle: 'A practical guide for businesses & leaders — free to download.',
+    description: "Whether you're a startup founder, business leader, or tech enthusiast, this handbook breaks down how modern technology — from custom software to AI — can transform how your business operates, competes, and grows.",
+    cover: '/book-cover.png',
+    color: '#D85A21',
+    fileName: 'Marod-Tech-Handbook.docx',
+    chapters: [
+      'Introduction to Modern Tech Architecture',
+      'Building Scalable Custom Software',
+      'AI Integration for Business Leaders',
+      'Securing Your Digital Infrastructure',
+      'Driving ROI Through Digital Transformation',
+    ],
+    features: [
+      { icon: '</>',  label: 'Custom Software Development' },
+      { icon: '🧠',  label: 'AI & Intelligent Solutions' },
+      { icon: '📈',  label: 'Digital Innovation & Business Growth' },
+    ]
+  },
+  {
+    id: 'ai-stack',
+    title: 'AI Stack for Junior Developers',
+    eyebrow: '🤖 Free Guide',
+    tagline: 'LEARN · BUILD · SCALE',
+    subtitle: 'A hands-on guide to mastering modern AI stacks and APIs for junior developers.',
+    description: "Master the tools, patterns, and architectures needed to build production-ready AI applications. From LLM API fundamentals to complex agentic reasoning workflows, this handbook is your fast-track to becoming an AI-capable engineer.",
+    cover: '/ai-stack-cover.png',
+    color: '#00b4d8',
+    fileName: 'AI-Stack-for-Junior-Developers-MarodTech.docx',
+    chapters: [
+      'Understanding LLMs & API Landscapes',
+      'Prompt Engineering & System Prompts',
+      'Building RAG (Retrieval-Augmented Generation) Systems',
+      'Introduction to Agentic Frameworks',
+      'Deploying & Scaling AI Applications',
+    ],
+    features: [
+      { icon: '⚡',  label: 'AI APIs & Orchestration' },
+      { icon: '🤖',  label: 'Agentic Workflows' },
+      { icon: '🛠️',  label: 'Hands-on Coding Examples' },
+    ]
+  }
 ];
 
 export default function BookSection() {
+  const [activeBook, setActiveBook] = useState(BOOKS[0]);
   const [modalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [errorMsg, setErrorMsg] = useState('');
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const bookRef = useRef(null);
-
-  // 3D tilt on book hover
-  const handleMouseMove = (e) => {
-    const rect = bookRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    setTilt({ x: dy * -12, y: dx * 14 });
-  };
-  const resetTilt = () => setTilt({ x: 0, y: 0 });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +66,7 @@ export default function BookSection() {
       const res = await fetch('/api/ebook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ name, email, bookId: activeBook.id }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
@@ -52,7 +74,7 @@ export default function BookSection() {
       // Trigger download
       const a = document.createElement('a');
       a.href = data.downloadUrl;
-      a.download = 'Marod-Tech-Handbook.docx';
+      a.download = data.fileName || activeBook.fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -67,182 +89,195 @@ export default function BookSection() {
       {/* ── SECTION ──────────────────────────────────────────────────────────── */}
       <section
         id="book"
-        className="section-padding"
         style={{
-          background: 'linear-gradient(170deg, var(--bg-secondary) 0%, #0d0503 60%, var(--bg-primary) 100%)',
+          background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)',
           position: 'relative',
           overflow: 'hidden',
+          padding: '3rem 0',
+          borderBottom: '1px solid var(--glass-border)',
         }}
       >
-        {/* Ambient glow */}
+        {/* Subtle Ambient glow based on activeBook color */}
         <div style={{
-          position: 'absolute', top: '10%', left: '5%',
-          width: 500, height: 500,
-          background: 'radial-gradient(circle, rgba(216,90,33,0.08) 0%, transparent 70%)',
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 320, height: 320,
+          background: `radial-gradient(circle, ${activeBook.color}0d 0%, transparent 70%)`,
           pointerEvents: 'none', borderRadius: '50%',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: '10%', right: '5%',
-          width: 400, height: 400,
-          background: 'radial-gradient(circle, rgba(195,22,45,0.06) 0%, transparent 70%)',
-          pointerEvents: 'none', borderRadius: '50%',
+          transition: 'background 0.5s ease',
+          zIndex: 1,
         }} />
 
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="container" style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* Header */}
-          <div className="text-center mb-5 reveal">
-            <p className="section-eyebrow">📘 Free Resource</p>
-            <h2 style={{ color: 'var(--cyan)' }} className="section-title">The Marod Tech Handbook</h2>
-            <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-              A practical guide for businesses &amp; leaders — free for you to download.
+          <div className="text-center mb-4 reveal">
+            <h2 style={{ fontSize: '1.25rem', color: 'var(--white)', margin: 0, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+              📚 Library Ledge
+            </h2>
+            <p style={{ color: 'var(--gray-600)', fontSize: '0.78rem', marginTop: '0.25rem', opacity: 0.8 }}>
+              Click a handbook to take it with you
             </p>
           </div>
 
-          <div className="row align-items-center g-5">
-            {/* ── LEFT: 3D Book ──────────────────────────────────────────── */}
-            <div className="col-lg-5 text-center reveal">
-              <div
-                ref={bookRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={resetTilt}
-                style={{
-                  display: 'inline-block',
-                  perspective: 1000,
-                  cursor: 'pointer',
-                }}
-                onClick={() => setModalOpen(true)}
-              >
-                <div style={{
-                  transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                  transition: tilt.x === 0 ? 'transform 0.6s ease' : 'transform 0.1s ease',
-                  transformStyle: 'preserve-3d',
-                  position: 'relative',
-                }}>
-                  {/* Book cover */}
-                  <img
-                    src="/book-cover.png"
-                    alt="The Marod Tech Handbook book cover"
-                    style={{
-                      width: '100%',
-                      maxWidth: 320,
-                      borderRadius: 12,
-                      boxShadow: '0 30px 80px rgba(0,0,0,0.7), 0 8px 24px rgba(216,90,33,0.3)',
-                      display: 'block',
-                      margin: '0 auto',
+          {/* Shelf Widget */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+            width: '100%',
+            maxWidth: '540px',
+            marginTop: '1.5rem',
+            padding: '0 1.5rem',
+          }} className="reveal">
+            
+            {/* Shelf Books Container */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              gap: '2.5rem',
+              width: '100%',
+              paddingBottom: '3px',
+              zIndex: 2,
+            }}>
+              {BOOKS.map((book) => {
+                const isActive = activeBook.id === book.id;
+                
+                return (
+                  <div
+                    key={book.id}
+                    onClick={() => {
+                      setActiveBook(book);
+                      setModalOpen(true);
                     }}
-                  />
-                  {/* Floating badge */}
-                  <div style={{
-                    position: 'absolute', top: -14, right: -14,
-                    background: 'linear-gradient(135deg, #D85A21, #C3162D)',
-                    color: '#fff', borderRadius: 999,
-                    padding: '0.35rem 0.8rem',
-                    fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.1em',
-                    boxShadow: '0 4px 16px rgba(216,90,33,0.5)',
-                    animation: 'float 3s ease-in-out infinite',
-                  }}>
-                    FREE DOWNLOAD
-                  </div>
-                </div>
-                {/* Reflection glow */}
-                <div style={{
-                  width: '60%', height: 20, margin: '12px auto 0',
-                  background: 'radial-gradient(ellipse, rgba(216,90,33,0.25) 0%, transparent 70%)',
-                  filter: 'blur(6px)',
-                }} />
-                <p style={{ fontSize: '0.72rem', color: 'var(--gray-600)', marginTop: '0.75rem', letterSpacing: '0.08em' }}>
-                  ✦ Hover to explore &nbsp;·&nbsp; Click to get access
-                </p>
-              </div>
-            </div>
-
-            {/* ── RIGHT: Info ────────────────────────────────────────────── */}
-            <div className="col-lg-7 reveal">
-              {/* Tagline */}
-              <div style={{
-                display: 'inline-block',
-                background: 'rgba(216,90,33,0.1)', border: '1px solid rgba(216,90,33,0.25)',
-                borderRadius: 999, padding: '0.3rem 1rem', marginBottom: '1.5rem',
-              }}>
-                <span style={{ fontSize: '0.7rem', color: '#D85A21', fontWeight: 700, letterSpacing: '0.15em' }}>
-                  INNOVATE · SECURE · TRANSFORM
-                </span>
-              </div>
-
-              <h3 style={{
-                fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 900,
-                color: 'var(--white)', lineHeight: 1.25, marginBottom: '1rem',
-              }}>
-                Building Smarter Solutions.<br />
-                Driving <span style={{ color: '#D85A21' }}>Real Impact.</span>
-              </h3>
-
-              <p style={{ fontSize: '0.9rem', color: 'var(--white)', opacity: 0.75, lineHeight: 1.8, marginBottom: '1.75rem' }}>
-                Whether you&apos;re a startup founder, business leader, or tech enthusiast, this handbook
-                breaks down how modern technology — from custom software to AI — can transform
-                how your business operates, competes, and grows.
-              </p>
-
-              {/* What's inside */}
-              <p style={{ fontSize: '0.65rem', letterSpacing: '0.2em', color: 'var(--gray-600)', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.75rem' }}>
-                What&apos;s inside
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
-                {CHAPTERS.map((ch, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{
-                      minWidth: 22, height: 22, borderRadius: '50%',
-                      background: 'rgba(216,90,33,0.15)', border: '1px solid rgba(216,90,33,0.3)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.6rem', fontWeight: 800, color: '#D85A21',
+                    onMouseEnter={() => {
+                      setActiveBook(book);
+                    }}
+                    style={{
+                      position: 'relative',
+                      cursor: 'pointer',
+                      transition: 'transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)',
+                      transform: isActive 
+                        ? 'translateY(-16px) scale(1.03) rotateY(-8deg)' 
+                        : 'translateY(0) scale(1) rotateY(0deg)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {/* 3D Book Container */}
+                    <div style={{
+                      position: 'relative',
+                      width: '110px',
+                      height: '154px',
+                      borderRadius: '3px 6px 6px 3px',
+                      boxShadow: isActive 
+                        ? `0 20px 40px rgba(0,0,0,0.65), 0 0 25px ${book.color}35`
+                        : '0 8px 18px rgba(0,0,0,0.45)',
+                      transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)',
+                      overflow: 'hidden',
+                      transformStyle: 'preserve-3d',
+                      perspective: '800px',
+                      borderLeft: `3px solid rgba(255, 255, 255, 0.15)`,
                     }}>
-                      {i + 1}
-                    </span>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--white)', opacity: 0.8 }}>{ch}</span>
+                      {/* Cover Image */}
+                      <img
+                        src={book.cover}
+                        alt={book.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                        }}
+                      />
+                      
+                      {/* Cover overlay crease effect */}
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        left: '4px',
+                        width: '1px',
+                        background: 'rgba(255, 255, 255, 0.15)',
+                        boxShadow: '0 0 2px rgba(0,0,0,0.3)',
+                        pointerEvents: 'none',
+                      }} />
+                      
+                      {/* Shine Overlay */}
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(115deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 0.1) 80%, rgba(0, 0, 0, 0.35) 100%)',
+                        pointerEvents: 'none',
+                      }} />
+                    </div>
+
+                    {/* Book Label / Title (Clean & Minimalist under book spine) */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '-48px',
+                      background: 'rgba(12, 12, 12, 0.92)',
+                      border: `1px solid ${isActive ? book.color : 'rgba(255,255,255,0.08)'}`,
+                      borderRadius: '8px',
+                      padding: '5px 10px',
+                      pointerEvents: 'none',
+                      opacity: isActive ? 1 : 0,
+                      transform: isActive ? 'translateY(0)' : 'translateY(-6px)',
+                      transition: 'all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)',
+                      zIndex: 10,
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.6)',
+                      textAlign: 'center',
+                      minWidth: '130px',
+                      backdropFilter: 'blur(8px)',
+                    }}>
+                      <span style={{ fontSize: '0.65rem', color: '#fff', fontWeight: 600, display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {book.title}
+                      </span>
+                      <span style={{ 
+                        fontSize: '0.58rem', 
+                        color: book.color, 
+                        display: 'block', 
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em',
+                        marginTop: '2px'
+                      }}>
+                        Take Book 📥
+                      </span>
+                    </div>
                   </div>
-                ))}
-              </div>
-
-              {/* Feature pills */}
-              <div className="d-flex flex-wrap gap-2 mb-4">
-                {FEATURES.map((f) => (
-                  <span key={f.label} style={{
-                    background: 'rgba(216,90,33,0.08)', border: '1px solid rgba(216,90,33,0.2)',
-                    borderRadius: 8, padding: '0.4rem 0.8rem',
-                    fontSize: '0.75rem', color: 'var(--white)', opacity: 0.85,
-                    display: 'flex', alignItems: 'center', gap: '0.4rem',
-                  }}>
-                    <span style={{ fontSize: '0.85rem' }}>{f.icon}</span> {f.label}
-                  </span>
-                ))}
-              </div>
-
-              {/* CTA */}
-              <button
-                onClick={() => setModalOpen(true)}
-                style={{
-                  background: 'linear-gradient(135deg, #D85A21, #C3162D)',
-                  color: '#fff', border: 'none', borderRadius: 999,
-                  padding: '0.8rem 2rem', fontSize: '0.9rem', fontWeight: 800,
-                  letterSpacing: '0.06em', cursor: 'pointer',
-                  boxShadow: '0 8px 32px rgba(216,90,33,0.4)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(216,90,33,0.6)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = '';
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(216,90,33,0.4)';
-                }}
-              >
-                📘 Get Free Access
-              </button>
-              <p style={{ fontSize: '0.72rem', color: 'var(--gray-600)', marginTop: '0.6rem' }}>
-                No credit card required · Instant PDF download
-              </p>
+                );
+              })}
             </div>
+
+            {/* Glassmorphic Shelf Board */}
+            <div style={{
+              width: '100%',
+              height: '10px',
+              background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.25)',
+              borderBottom: '1px solid rgba(0, 0, 0, 0.4)',
+              borderRadius: '6px',
+              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
+              position: 'relative',
+              zIndex: 1,
+            }}>
+              {/* Shelf shadow underneath */}
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                left: '2%',
+                width: '96%',
+                height: '6px',
+                background: 'rgba(0, 0, 0, 0.7)',
+                filter: 'blur(3px)',
+                borderRadius: '50%',
+                pointerEvents: 'none',
+              }} />
+            </div>
+
           </div>
         </div>
       </section>
@@ -259,20 +294,21 @@ export default function BookSection() {
           onClick={(e) => { if (e.target === e.currentTarget) { setModalOpen(false); setStatus('idle'); }}}
         >
           <div style={{
-            background: 'linear-gradient(145deg, #111, #1a0a05)',
-            border: '1px solid rgba(216,90,33,0.3)',
+            background: activeBook.id === 'ai-stack' ? 'linear-gradient(145deg, #111, #05131a)' : 'linear-gradient(145deg, #111, #1a0a05)',
+            border: `1px solid ${activeBook.color}44`,
             borderRadius: 24, padding: 'clamp(1.5rem, 5vw, 2.5rem)',
             maxWidth: 460, width: '100%',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(216,90,33,0.1)',
+            boxShadow: `0 40px 100px rgba(0,0,0,0.8), 0 0 60px ${activeBook.color}22`,
             animation: 'slideUp 0.3s cubic-bezier(0.23,1,0.32,1)',
+            transition: 'all 0.3s ease',
           }}>
             {status === 'success' ? (
               <div className="text-center" style={{ padding: '1rem 0' }}>
                 <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>🎉</div>
-                <h3 style={{ color: '#D85A21', fontWeight: 900, marginBottom: '0.5rem' }}>You&apos;re all set!</h3>
+                <h3 style={{ color: activeBook.color, fontWeight: 900, marginBottom: '0.5rem', transition: 'color 0.3s ease' }}>You&apos;re all set!</h3>
                 <p style={{ color: 'var(--white)', opacity: 0.8, fontSize: '0.9rem', lineHeight: 1.6 }}>
                   Your download should start automatically.<br />
-                  Enjoy <em>The Marod Tech Handbook</em>!
+                  Enjoy <em>{activeBook.title}</em>!
                 </p>
                 <button
                   onClick={() => { setModalOpen(false); setStatus('idle'); setName(''); setEmail(''); }}
@@ -288,7 +324,7 @@ export default function BookSection() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
                   <div>
                     <h3 style={{ color: 'var(--white)', fontWeight: 900, fontSize: '1.2rem', margin: 0 }}>
-                      Get Free Access 📘
+                      Get Free Access 📚
                     </h3>
                     <p style={{ color: 'var(--gray-600)', fontSize: '0.8rem', margin: '0.25rem 0 0' }}>
                       Enter your details to download instantly
@@ -304,13 +340,17 @@ export default function BookSection() {
                 {/* Book mini-preview */}
                 <div style={{
                   display: 'flex', gap: '0.75rem', alignItems: 'center',
-                  background: 'rgba(216,90,33,0.06)', border: '1px solid rgba(216,90,33,0.15)',
+                  background: activeBook.id === 'ai-stack' ? 'rgba(0, 180, 216, 0.06)' : 'rgba(216, 90, 33, 0.06)',
+                  border: `1px solid ${activeBook.color}22`,
                   borderRadius: 12, padding: '0.75rem', marginBottom: '1.5rem',
+                  transition: 'all 0.3s ease',
                 }}>
-                  <img src="/book-cover.png" alt="Book" style={{ width: 48, borderRadius: 4, flexShrink: 0 }} />
+                  <img src={activeBook.cover} alt="Book" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 4, flexShrink: 0 }} />
                   <div>
-                    <p style={{ color: 'var(--white)', fontWeight: 700, fontSize: '0.82rem', margin: 0 }}>The Marod Tech Handbook</p>
-                    <p style={{ color: 'var(--gray-600)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>Building Smarter Solutions · DOCX</p>
+                    <p style={{ color: 'var(--white)', fontWeight: 700, fontSize: '0.82rem', margin: 0 }}>{activeBook.title}</p>
+                    <p style={{ color: 'var(--gray-600)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>
+                      {activeBook.id === 'ai-stack' ? 'Mastering AI Stacks · DOCX' : 'Building Smarter Solutions · DOCX'}
+                    </p>
                   </div>
                 </div>
 
@@ -333,7 +373,7 @@ export default function BookSection() {
                         outline: 'none', transition: 'border-color 0.2s',
                         boxSizing: 'border-box',
                       }}
-                      onFocus={(e) => { e.target.style.borderColor = 'rgba(216,90,33,0.6)'; }}
+                      onFocus={(e) => { e.target.style.borderColor = activeBook.color; }}
                       onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                     />
                   </div>
@@ -355,7 +395,7 @@ export default function BookSection() {
                         outline: 'none', transition: 'border-color 0.2s',
                         boxSizing: 'border-box',
                       }}
-                      onFocus={(e) => { e.target.style.borderColor = 'rgba(216,90,33,0.6)'; }}
+                      onFocus={(e) => { e.target.style.borderColor = activeBook.color; }}
                       onBlur={(e) => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                     />
                   </div>
@@ -369,13 +409,13 @@ export default function BookSection() {
                     disabled={status === 'loading'}
                     style={{
                       background: status === 'loading'
-                        ? 'rgba(216,90,33,0.4)'
-                        : 'linear-gradient(135deg, #D85A21, #C3162D)',
+                        ? 'rgba(255,255,255,0.1)'
+                        : activeBook.id === 'ai-stack' ? 'linear-gradient(135deg, #00b4d8, #0077b6)' : 'linear-gradient(135deg, #D85A21, #C3162D)',
                       color: '#fff', border: 'none', borderRadius: 999,
                       padding: '0.85rem', fontSize: '0.9rem', fontWeight: 800,
                       cursor: status === 'loading' ? 'not-allowed' : 'pointer',
                       letterSpacing: '0.06em', transition: 'all 0.2s',
-                      boxShadow: '0 6px 24px rgba(216,90,33,0.35)',
+                      boxShadow: `0 6px 24px ${activeBook.color}35`,
                     }}
                   >
                     {status === 'loading' ? '⏳ Processing...' : '📥 Download Free Copy'}

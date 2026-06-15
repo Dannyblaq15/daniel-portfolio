@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Projects', href: '#projects' },
-  { label: '📘 Handbook', href: '#book' },
+  { label: '📚 Books', href: '#book' },
   { label: 'Skills', href: '#skills' },
   { label: 'Lab', href: '#lab' },
 ];

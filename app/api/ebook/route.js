@@ -24,7 +24,7 @@ function incrementDownloadCount() {
 
 export async function POST(request) {
   try {
-    const { name, email } = await request.json();
+    const { name, email, bookId } = await request.json();
 
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required.' }, { status: 400 });
@@ -35,16 +35,21 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 });
     }
 
-    // ── 1. Log to local file (always works) ───────────────────────────────────
+    const isAiStack = bookId === 'ai-stack';
+    const bookTitle = isAiStack ? 'AI Stack for Junior Developers' : 'The Marod Tech Handbook';
+    const downloadUrl = isAiStack ? '/ebook/ai-stack-for-junior-developers.docx' : '/ebook/marod-tech-handbook.docx';
+    const fileName = isAiStack ? 'AI-Stack-for-Junior-Developers-MarodTech.docx' : 'Marod-Tech-Handbook.docx';
+
     // Store lead in Vercel KV (list) and increment download count
     try {
-      await kv.lpush('ebook_leads', JSON.stringify({ name, email, downloadedAt: new Date().toISOString() }));
+      await kv.lpush('ebook_leads', JSON.stringify({ name, email, bookId: bookId || 'marod-tech', bookTitle, downloadedAt: new Date().toISOString() }));
       await kv.incr('ebook_downloads');
+      await kv.incr(`ebook_downloads_${bookId || 'marod-tech'}`);
     } catch (e) {
       console.warn('KV operation failed:', e);
     }
 
-    // ── 2. Send notification email via Resend (production) ───────────────────
+    // Send notification email via Resend (production)
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       try {
@@ -54,28 +59,29 @@ export async function POST(request) {
           body: JSON.stringify({
             from: 'Ebook Download <onboarding@resend.dev>',
             to: ['lewisdaniel647@gmail.com'],
-            subject: `📘 New Ebook Download — ${name}`,
+            subject: `📘 New Ebook Download — ${name} (${bookTitle})`,
             html: `
               <div style="font-family:sans-serif;max-width:500px;margin:0 auto">
                 <h2 style="color:#D85A21">New Ebook Lead 🎉</h2>
+                <p><strong>Book:</strong> ${bookTitle}</p>
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
                 <p><strong>Time:</strong> ${new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' })}</p>
                 <hr/>
-                <p style="color:#888;font-size:0.8rem">From your portfolio — Marod Tech Handbook download</p>
+                <p style="color:#888;font-size:0.8rem">From your portfolio — ${bookTitle} download</p>
               </div>
             `,
           }),
         });
       } catch (emailErr) {
         console.error('Resend notification failed:', emailErr);
-        // Non-fatal — lead is already saved locally
       }
     }
 
     return NextResponse.json({
       success: true,
-      downloadUrl: '/ebook/marod-tech-handbook.docx',
+      downloadUrl,
+      fileName,
       message: 'Access granted!',
     });
   } catch (err) {

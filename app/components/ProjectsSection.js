@@ -18,7 +18,7 @@ const PROJECTS = [
     color: '#D85A21',
     status: 'Live',
     github: 'https://github.com/Dannyblaq15',
-    demo: null, // Add your live URL here when available e.g. 'https://wahala-tracker.vercel.app'
+    demo: 'https://wahala-tracker.vercel.app',
   },
   {
     id: 2,
