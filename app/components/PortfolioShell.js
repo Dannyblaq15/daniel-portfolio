@@ -90,10 +90,10 @@ export default function PortfolioShell() {
       <Navbar onLogoDoubleClick={triggerAntiGravity} onLogoClick={handleLogoCombined} />
       <main id="main-content">
         <HeroSection />
+        <AboutSection />
+        <SkillsSection />
         <ProjectsSection />
         <BookSection />
-        <SkillsSection />
-        <AboutSection />
         <LabSection />
         <ContactSection />
       </main>

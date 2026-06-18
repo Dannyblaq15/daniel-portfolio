@@ -34,7 +34,7 @@ const BOOKS = [
     description: "Master the tools, patterns, and architectures needed to build production-ready AI applications. From LLM API fundamentals to complex agentic reasoning workflows, this handbook is your fast-track to becoming an AI-capable engineer.",
     cover: '/ai-stack-cover.png',
     color: '#00b4d8',
-    fileName: 'AI-Stack-for-Junior-Developers-MarodTech.docx',
+    fileName: 'AI-Stack-for-Junior-Developers-MarodTech.pdf',
     chapters: [
       'Understanding LLMs & API Landscapes',
       'Prompt Engineering & System Prompts',

@@ -71,7 +71,37 @@ export default function AboutSection() {
                 </div>
               ))}
             </div>
-          </div>
+
+            {/* Download CV */}
+            <div className="mt-4">
+              <a
+                href="/daniel-lewis-cv.pdf"
+                download
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                  background: 'linear-gradient(135deg, #D85A21, #8B4513)',
+                  color: '#fff', fontWeight: 700, fontSize: '0.82rem',
+                  padding: '0.65rem 1.4rem', borderRadius: 999,
+                  textDecoration: 'none', letterSpacing: '0.04em',
+                  boxShadow: '0 4px 16px rgba(216,90,33,0.35)',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 28px rgba(216,90,33,0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = '';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(216,90,33,0.35)';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8v2h14v-2H5z"/>
+                </svg>
+                Download CV
+              </a>
+            </div>
+          </div>{/* end col-lg-5 bio */}
 
           {/* Timeline */}
           <div className="col-lg-6 offset-lg-1 reveal" style={{ animationDelay: '0.2s' }}>

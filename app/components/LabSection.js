@@ -586,7 +586,7 @@ export default function LabSection() {
             <div className="mb-2 d-flex align-items-center gap-2">
               <span style={{ fontSize: '1.2rem' }}>🤖</span>
               <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--cyan)' }}>Daniel AI</span>
-              <span className="tech-pill">ChatGPT API</span>
+              <span className="tech-pill">Qwen AI</span>
             </div>
             <ChatbotExperiment />
           </div>
