@@ -1225,14 +1225,14 @@ button {
   }
 
   .mobile-panel .nav-link {
-    color: rgba(247, 239, 233, 0.72);
+    color: var(--nav-text-muted);
     padding: 0.85rem 1rem;
   }
 
   .mobile-panel .nav-link:hover,
   .mobile-panel .nav-link.active {
-    color: #ffffff;
-    background: rgba(216, 90, 33, 0.12);
+    color: var(--nav-text);
+    background: rgba(216, 90, 33, 0.1);
   }
 
   .mobile-panel .theme-toggle {
