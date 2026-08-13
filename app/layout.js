@@ -4,8 +4,8 @@ import { Analytics } from '@vercel/analytics/react';
 export const metadata = {
   metadataBase: new URL('https://daniel-portfolio-mocha.vercel.app'),
   title: {
-    default: 'Daniel Lewis — Software & React Native Developer',
-    template: '%s | Daniel Lewis',
+    default: 'Marod Tech — Daniel Lewis Portfolio',
+    template: '%s | Marod Tech',
   },
   description:
     'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
@@ -22,7 +22,7 @@ export const metadata = {
   ],
   authors: [{ name: 'Daniel Lewis', url: 'https://daniel-portfolio-mocha.vercel.app/' }],
   creator: 'Daniel Lewis',
-  publisher: 'Daniel Lewis',
+  publisher: 'Marod Tech',
   category: 'technology',
   alternates: {
     canonical: '/',
@@ -45,17 +45,17 @@ export const metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Daniel Lewis — Software & React Native Developer',
+    title: 'Marod Tech — Daniel Lewis Portfolio',
     description:
       'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
     url: '/',
-    siteName: 'Daniel Lewis Portfolio',
+    siteName: 'Marod Tech',
     images: [
       {
         url: '/icon-512.png',
         width: 512,
         height: 512,
-        alt: 'Daniel Lewis portfolio icon',
+        alt: 'Marod Tech portfolio icon',
       },
     ],
     locale: 'en_US',
@@ -63,7 +63,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daniel Lewis — Software & React Native Developer',
+    title: 'Marod Tech — Daniel Lewis Portfolio',
     description:
       'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
     images: ['/icon-512.png'],
@@ -97,7 +97,7 @@ const personJsonLd = {
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Daniel Lewis Portfolio',
+  name: 'Marod Tech',
   url: 'https://daniel-portfolio-mocha.vercel.app/',
   description:
     'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
