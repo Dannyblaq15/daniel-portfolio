@@ -2,191 +2,197 @@
 
 const PROJECTS = [
   {
-    id: 1,
-    emoji: '🐛',
     title: 'Wahala Tracker',
-    subtitle: 'Issue Tracking Web App',
     description:
-      'A web-based issue tracking application built during my learning journey. Designed to help teams log, manage, and resolve issues efficiently with a clean, responsive interface.',
-    features: [
-      'User Authentication',
-      'Responsive Design',
-      'Issue Tracking',
-      'Cloud Deployment',
-    ],
-    tech: ['JavaScript', 'HTML', 'CSS', 'GitHub', 'Vercel'],
-    color: '#D85A21',
-    status: 'Live',
-    github: 'https://github.com/Dannyblaq15',
-    demo: 'https://wahala-tracker.vercel.app',
+      'A Nigerian-flavoured stress-tracking application that helps users record daily problems, measure severity, identify patterns, and manage their wellbeing.',
+    problem: 'People need a simple way to capture stressful events and notice repeat patterns without a heavy productivity tool.',
+    role: 'Product builder and frontend developer',
+    tech: ['TypeScript', 'Next.js 16', 'React 19', 'Supabase', 'Firebase packages', 'Recharts', 'Framer Motion', 'Vercel'],
+    features: ['Daily problem logging', 'Severity tracking', 'Pattern-oriented dashboard'],
+    decision: 'Keep the core flow focused on fast personal logging before adding heavier analytics or collaboration.',
+    status: 'Live project. Public repository verified.',
+    github: 'https://github.com/Dannyblaq15/wahala-tracker',
+    demo: 'https://wahala-tracker.vercel.app/',
   },
   {
-    id: 2,
-    emoji: '📱',
     title: 'HMS Health Connect',
-    subtitle: 'HarmonyOS Mobile App',
     description:
-      'A HarmonyOS mobile application built during my Huawei Native Developer training, integrating Huawei Mobile Services (HMS) kits including Account, Health data, and Push Notification APIs.',
-    features: [
-      'HMS Account Kit',
-      'Health Data APIs',
-      'Push Notifications',
-      'HarmonyOS Native UI',
-    ],
-    tech: ['HarmonyOS', 'HMS Kits', 'Java', 'Push Kit', 'Health Kit'],
-    color: '#C3162D',
-    status: 'In Progress',
-    github: 'https://github.com/Dannyblaq15',
+      'A mobile health-connectivity project from Huawei Native Developer training, currently treated as training work until a public repository is available.',
+    problem: 'Explore mobile health service integrations and account-based flows in the Huawei ecosystem.',
+    role: 'Trainee developer',
+    tech: ['Huawei Mobile Services', 'HarmonyOS training', 'Mobile UI'],
+    features: ['Training project scope', 'Health service exploration', 'Mobile interaction patterns'],
+    decision: 'Presented as in development so planned features are not shown as completed production functionality.',
+    status: 'In development / private repository',
+    github: null,
+    demo: null,
+  },
+  {
+    title: 'Ink and Paper',
+    description:
+      'A local-first Flutter notepad app translated from a Google Stitch design into a working mobile note-taking experience.',
+    problem: 'Users need a simple notes app that can create and store notes locally without depending on a network connection.',
+    role: 'Flutter developer',
+    tech: ['Flutter', 'Dart', 'Riverpod', 'Hive', 'hive_flutter', 'path_provider', 'uuid', 'google_fonts', 'flutter_svg'],
+    features: ['Local note storage', 'Note list and editor screens', 'Custom splash and app icon assets'],
+    decision: 'Use Hive for lightweight local persistence and Riverpod to keep note state and UI updates organized.',
+    status: 'Source available. Local-first mobile app.',
+    github: 'https://github.com/Dannyblaq15/ink-and-paper',
+    demo: null,
+  },
+  {
+    title: 'Kinetic Finance',
+    description:
+      'A React Native fintech app prototype with authentication flow, dashboard navigation, budgets, cards, goals, subscriptions, and transaction screens.',
+    problem: 'Personal finance apps need clear mobile navigation for money overview, budgeting, goals, cards, and account actions.',
+    role: 'React Native developer',
+    tech: ['React Native 0.85', 'Expo 56', 'React 19', 'React Navigation', 'Supabase', 'Firebase', 'Expo Local Authentication', 'Reanimated'],
+    features: ['Auth and onboarding flow', 'Finance dashboard with tab navigation', 'Budget, card, goal, subscription, and transaction screens'],
+    decision: 'Use stack and bottom-tab navigation to separate onboarding/auth screens from the main finance workspace.',
+    status: 'Source available. React Native fintech prototype.',
+    github: 'https://github.com/Dannyblaq15/kinetic-finance',
     demo: null,
   },
 ];
 
+function ProjectMockup({ project }) {
+  if (project.title === 'Ink and Paper') {
+    return (
+      <div className="project-shot" aria-label="Ink and Paper app preview">
+        <div className="mock-phone">
+          <div className="mock-phone-top" />
+          <div className="mock-note-header">Ink &amp; Paper</div>
+          <div className="mock-note-card"><strong>Project ideas</strong><span>Polish portfolio, ship notes...</span></div>
+          <div className="mock-note-card"><strong>Learning log</strong><span>Flutter state, local storage...</span></div>
+          <div className="mock-note-button">+</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (project.title === 'Kinetic Finance') {
+    return (
+      <div className="project-shot" aria-label="Kinetic Finance app preview">
+        <div className="mock-phone finance">
+          <div className="mock-phone-top" />
+          <div className="mock-finance-balance">
+            <span>Total balance</span>
+            <strong>$8,420.00</strong>
+          </div>
+          <div className="mock-finance-row"><span>Budgets</span><strong>68%</strong></div>
+          <div className="mock-finance-row"><span>Goals</span><strong>4 active</strong></div>
+          <div className="mock-finance-row"><span>Cards</span><strong>2 linked</strong></div>
+          <div className="mock-finance-tabs"><span /><span /><span /><span /></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (project.title === 'HMS Health Connect') {
+    return (
+      <div className="project-shot">
+        <div className="mock-browser">
+          <div className="mock-bar"><span /><span /><span /></div>
+          <div className="mock-body">
+            <div className="mock-card"><strong>Mobile health training</strong></div>
+            <div className="mock-card">Account and service integration practice</div>
+            <div className="mock-card">Private or in-development repository</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="project-shot" aria-label="Wahala Tracker interface preview">
+      <div className="mock-browser">
+        <div className="mock-bar"><span /><span /><span /></div>
+        <div className="mock-body">
+          <div className="mock-card">
+            <strong>Today&apos;s Wahala</strong>
+            <p className="section-copy" style={{ marginTop: '0.35rem', fontSize: '0.95rem' }}>
+              Log the issue, choose severity, and save the pattern.
+            </p>
+          </div>
+          <div className="mock-card">
+            <span className="meta-label">Severity</span>
+            <div className="mock-meter"><span /></div>
+          </div>
+          <div className="grid grid-2">
+            <div className="mock-card">Patterns</div>
+            <div className="mock-card">Wellbeing notes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="section-padding" style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}>
+    <section id="projects" className="section section-muted">
       <div className="container">
-        <div className="text-center mb-5 reveal">
+        <div className="section-header reveal">
           <p className="section-eyebrow">Work</p>
-          <h2 style={{ color: 'var(--cyan)' }} className="section-title">Featured Projects</h2>
-          <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem', marginTop: '0.75rem' }}>
-            Projects I&apos;ve built along my development journey.
+          <h2 className="section-title">Featured Projects</h2>
+          <p className="section-copy">
+            Completed and in-progress work, shown with honest scope, clear links, and the decisions behind the build.
           </p>
         </div>
 
-        <div className="row justify-content-center g-4">
-          {PROJECTS.map((project, i) => (
-            <div key={project.id} className="col-lg-10 reveal" style={{ animationDelay: `${i * 0.15}s` }}>
-              <div
-                className="glass"
-                style={{
-                  borderRadius: 24,
-                  padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-                  border: `1px solid ${project.color}22`,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = `0 20px 60px ${project.color}22`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = '';
-                  e.currentTarget.style.boxShadow = '';
-                }}
-              >
-                {/* Glow accent */}
-                <div style={{
-                  position: 'absolute', top: 0, right: 0,
-                  width: 200, height: 200,
-                  background: `radial-gradient(circle, ${project.color}15 0%, transparent 70%)`,
-                  pointerEvents: 'none',
-                }} />
+        <div className="projects-grid">
+          {PROJECTS.map((project) => (
+            <article key={project.title} className="card project-card reveal">
+              <ProjectMockup project={project} />
 
-                <div className="row g-4 align-items-center">
-                  {/* Left: Info */}
-                  <div className="col-md-7">
-                    {/* Header */}
-                    <div className="d-flex align-items-center gap-3 mb-3">
-                      <span style={{ fontSize: '2.5rem' }}>{project.emoji}</span>
-                      <div>
-                        <div className="d-flex align-items-center gap-2 flex-wrap">
-                          <h3 style={{
-                            fontSize: '1.4rem', fontWeight: 900, margin: 0,
-                            background: `linear-gradient(135deg, ${project.color}, #8B4513)`,
-                            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                          }}>
-                            {project.title}
-                          </h3>
-                          <span style={{
-                            background: `${project.color}18`, border: `1px solid ${project.color}44`,
-                            borderRadius: 999, padding: '0.15rem 0.6rem',
-                            fontSize: '0.6rem', color: project.color, fontWeight: 700, letterSpacing: '0.1em',
-                          }}>
-                            {project.status === 'Live' ? '● ' : '◌ '}{project.status}
-                          </span>
-                        </div>
-                        <p style={{ fontSize: '0.78rem', color: 'var(--gray-600)', margin: 0, marginTop: '0.15rem', letterSpacing: '0.05em' }}>
-                          {project.subtitle}
-                        </p>
-                      </div>
-                    </div>
+              <div className="project-details">
+                <span className="pill">{project.status}</span>
+                <h3 style={{ marginTop: '1rem' }}>{project.title}</h3>
+                <p className="section-copy">{project.description}</p>
 
-                    <p style={{ fontSize: '0.9rem', color: 'var(--white)', opacity: 0.8, lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                      {project.description}
-                    </p>
-
-                    {/* Tech stack */}
-                    <div className="d-flex flex-wrap gap-2 mb-4">
-                      {project.tech.map((t) => (
-                        <span key={t} className="tech-pill">{t}</span>
-                      ))}
-                    </div>
-
-                    {/* CTAs */}
-                    <div className="d-flex flex-wrap gap-3 align-items-center">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="magnetic-btn secondary"
-                        style={{ fontSize: '0.82rem', textDecoration: 'none', display: 'inline-block' }}
-                      >
-                        View on GitHub ↗
-                      </a>
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            fontSize: '0.82rem', textDecoration: 'none', display: 'inline-flex',
-                            alignItems: 'center', gap: '0.4rem',
-                            background: `linear-gradient(135deg, ${project.color}, #8B4513)`,
-                            color: '#fff', fontWeight: 700, padding: '0.55rem 1.2rem',
-                            borderRadius: 999, letterSpacing: '0.04em',
-                            boxShadow: `0 4px 16px ${project.color}44`,
-                            transition: 'transform 0.2s, box-shadow 0.2s',
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'scale(1.05)';
-                            e.currentTarget.style.boxShadow = `0 8px 24px ${project.color}66`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = '';
-                            e.currentTarget.style.boxShadow = `0 4px 16px ${project.color}44`;
-                          }}
-                        >
-                          🚀 Live Demo
-                        </a>
-                      )}
-                    </div>
+                <div className="project-meta">
+                  <div className="meta-box">
+                    <span className="meta-label">Problem</span>
+                    <span className="meta-value">{project.problem}</span>
                   </div>
-
-                  {/* Right: Features */}
-                  <div className="col-md-5">
-                    <p style={{
-                      fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase',
-                      color: 'var(--gray-600)', fontWeight: 700, marginBottom: '1rem',
-                    }}>
-                      Key Features
-                    </p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                      {project.features.map((f) => (
-                        <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                          <span style={{
-                            width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
-                            background: project.color,
-                            boxShadow: `0 0 8px ${project.color}`,
-                          }} />
-                          <span style={{ fontSize: '0.85rem', color: 'var(--white)', opacity: 0.8 }}>{f}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="meta-box">
+                    <span className="meta-label">My role</span>
+                    <span className="meta-value">{project.role}</span>
                   </div>
                 </div>
+
+                <span className="meta-label">Technologies</span>
+                <div className="tag-list">
+                  {project.tech.map((tech) => <span className="tag" key={tech}>{tech}</span>)}
+                </div>
+
+                <span className="meta-label">Key features</span>
+                <ul className="feature-list">
+                  {project.features.map((feature) => <li key={feature}>{feature}</li>)}
+                </ul>
+
+                <div className="meta-box" style={{ marginTop: '1rem' }}>
+                  <span className="meta-label">Technical challenge or decision</span>
+                  <span className="meta-value">{project.decision}</span>
+                </div>
+
+                <div className="card-actions">
+                  <a className="button button-secondary" href="#system-design">
+                    View Case Study
+                  </a>
+                  {project.demo && (
+                    <a className="button button-primary" href={project.demo} target="_blank" rel="noopener noreferrer">
+                      Live Demo
+                    </a>
+                  )}
+                  {project.github && (
+                    <a className="button button-secondary" href={project.github} target="_blank" rel="noopener noreferrer">
+                      Source Code
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

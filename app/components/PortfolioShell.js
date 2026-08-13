@@ -2,12 +2,14 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import Navbar from './Navbar';
 import HeroSection from './HeroSection';
-import LabSection from './LabSection';
-import SkillsSection from './SkillsSection';
-import AboutSection from './AboutSection';
-import ContactSection from './ContactSection';
 import ProjectsSection from './ProjectsSection';
+import AboutSection from './AboutSection';
+import SkillsSection from './SkillsSection';
+import SystemDesignSection from './SystemDesignSection';
+import ContentSection from './ContentSection';
 import BookSection from './BookSection';
+import LabSection from './LabSection';
+import ContactSection from './ContactSection';
 import Footer from './Footer';
 import DevModeModal, { useDevMode } from './DevModeModal';
 
@@ -90,9 +92,11 @@ export default function PortfolioShell() {
       <Navbar onLogoDoubleClick={triggerAntiGravity} onLogoClick={handleLogoCombined} />
       <main id="main-content">
         <HeroSection />
+        <ProjectsSection />
         <AboutSection />
         <SkillsSection />
-        <ProjectsSection />
+        <SystemDesignSection />
+        <ContentSection />
         <BookSection />
         <LabSection />
         <ContactSection />
@@ -108,14 +112,13 @@ export default function PortfolioShell() {
           aria-live="polite"
           style={{
             position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)',
-            background: 'rgba(216,90,33,0.12)', border: '1px solid rgba(216,90,33,0.3)',
+            background: 'var(--color-primary-soft)', border: '1px solid var(--color-border)',
             borderRadius: 999, padding: '0.4rem 1.2rem',
-            color: '#D85A21', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em',
+            color: 'var(--color-primary)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em',
             zIndex: 800, backdropFilter: 'blur(10px)',
-            animation: 'fadeInUp 0.3s ease',
           }}
         >
-          ⚡ FULL ANTI-GRAVITY ACTIVE
+          Anti-gravity active
         </div>
       )}
     </>

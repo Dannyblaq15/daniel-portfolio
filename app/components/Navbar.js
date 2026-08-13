@@ -1,79 +1,90 @@
 'use client';
-import { useEffect, useRef, useState, useCallback } from 'react';
 
-// Nav links config
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
+
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
-  { label: '📚 Books', href: '#book' },
+  { label: 'Books', href: '#books' },
   { label: 'Lab', href: '#lab' },
 ];
 
 export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const [isDark, setIsDark] = useState(true);
+  const [activeSection, setActiveSection] = useState('#projects');
   const lastTapRef = useRef(0);
-  const navRef = useRef(null);
+  const panelRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   useEffect(() => {
-    // initialize theme state
-    if (typeof document !== 'undefined') {
-      const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsDark(isDarkTheme);
-    }
+    document.body.classList.toggle('menu-locked', menuOpen);
+    if (!menuOpen) return undefined;
+
+    const focusable = () =>
+      panelRef.current?.querySelectorAll('a[href], button:not([disabled])') || [];
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const items = Array.from(focusable());
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    requestAnimationFrame(() => focusable()[0]?.focus());
+
+    return () => {
+      document.body.classList.remove('menu-locked');
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveSection(`#${visible.target.id}`);
+      },
+      { rootMargin: '-90px 0px -45% 0px', threshold: [0.1, 0.35, 0.6] }
+    );
+
+    document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = useCallback((href) => {
+    const target = document.querySelector(href);
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setMenuOpen(false);
   }, []);
 
   const toggleTheme = () => {
-    const nextTheme = isDark ? 'light' : 'dark';
-    setIsDark(!isDark);
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', nextTheme);
     localStorage.setItem('theme', nextTheme);
   };
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Track active section for indicator dot
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection('#' + entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.35, rootMargin: '-80px 0px -40% 0px' }
-    );
-
-    const sections = document.querySelectorAll('section[id]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Close menu on outside click
-  useEffect(() => {
-    if (!menuOpen) return;
-    const handleClick = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, [menuOpen]);
-
-  // Logo single/double-click/tap handler
-  const handleLogoInteraction = useCallback(() => {
+  const handleLogoInteraction = () => {
     onLogoClick?.();
     const now = Date.now();
     if (now - lastTapRef.current < 350) {
@@ -82,142 +93,115 @@ export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
     } else {
       lastTapRef.current = now;
     }
-  }, [onLogoClick, onLogoDoubleClick]);
-
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const islandState = menuOpen
-    ? 'expanded'
-    : scrolled
-      ? 'scrolled'
-      : 'idle';
+  const renderLinks = (mobile = false) =>
+    NAV_LINKS.map(({ label, href }) => (
+      <a
+        key={href}
+        className={`nav-link ${activeSection === href ? 'active' : ''}`}
+        href={href}
+        onClick={(event) => {
+          event.preventDefault();
+          scrollTo(href);
+        }}
+        aria-current={activeSection === href ? 'true' : undefined}
+      >
+        {label}
+      </a>
+    ));
 
   return (
     <>
-      <nav
-        ref={navRef}
-        className={`dynamic-island ${islandState} ${hovered ? 'hovered' : ''}`}
-        role="navigation"
-        aria-label="Main navigation"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Ambient glow */}
-        <div className="island-glow" />
-
-        {/* Inner content */}
-        <div className="island-content">
-          {/* Logo */}
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <nav className="site-nav" aria-label="Main navigation">
+        <div className="container nav-inner">
           <button
-            className="island-logo"
+            type="button"
+            className="wordmark"
             onClick={handleLogoInteraction}
             onDoubleClick={onLogoDoubleClick}
-            title="Double-click to activate Full Anti-Gravity"
-            aria-label="DANNYBLAQ logo — double-click for Easter egg"
+            aria-label="MAROD TECH home"
+            title="Double-click for a small anti-gravity Easter egg"
           >
-            <span className="island-logo-dot" />
-            <span className="island-logo-text">DANNYBLAQ</span>
+            <span className="wordmark-dot" aria-hidden="true" />
+            MAROD TECH
           </button>
 
-          {/* Desktop Nav Links */}
-          <div className="island-links">
-            {NAV_LINKS.map(({ label, href }) => (
-              <a
-                key={label}
-                className={`island-link ${activeSection === href ? 'active' : ''}`}
-                href={href}
-                onClick={(e) => handleNavClick(e, href)}
-              >
-                {label}
-                {activeSection === href && (
-                  <span className="island-link-indicator" />
-                )}
-              </a>
-            ))}
+          <div className="nav-links" aria-label="Primary">
+            {renderLinks()}
           </div>
 
-          {/* Theme Toggle Button */}
           <button
+            type="button"
+            className="theme-toggle"
             onClick={toggleTheme}
-            className="island-link"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0 8px', fontSize: '1.1rem' }}
-            aria-label="Toggle Theme"
-            title="Toggle Theme"
+            aria-label="Toggle color theme"
+            title="Toggle color theme"
           >
-            {isDark ? '☀️' : '🌙'}
+            <Sun className="theme-icon sun-icon" aria-hidden="true" size={18} />
+            <Moon className="theme-icon moon-icon" aria-hidden="true" size={18} />
           </button>
 
-          {/* CTA Button */}
           <a
+            className="button button-primary nav-cta"
             href="#contact"
-            onClick={(e) => handleNavClick(e, '#contact')}
-            className="island-cta"
+            onClick={(event) => {
+              event.preventDefault();
+              scrollTo('#contact');
+            }}
           >
-            <span className="island-cta-dot" />
             Let&apos;s Talk
           </a>
 
-          {/* Mobile toggle */}
           <button
-            className="island-toggle"
+            ref={menuButtonRef}
             type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="menu-toggle"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
-            aria-label="Toggle navigation"
+            aria-controls="mobile-navigation"
           >
-            <div className={`island-hamburger ${menuOpen ? 'open' : ''}`}>
-              <span />
-              <span />
-            </div>
+            {menuOpen ? 'Close' : 'Menu'}
           </button>
         </div>
-
-        {/* Mobile expanded menu */}
-        {menuOpen && (
-          <div className="island-menu">
-            {NAV_LINKS.map(({ label, href }, i) => (
-              <a
-                key={label}
-                className="island-menu-link"
-                href={href}
-                onClick={(e) => handleNavClick(e, href)}
-                style={{ animationDelay: `${i * 0.05}s` }}
-              >
-                <span className="island-menu-link-number">0{i + 1}</span>
-                {label}
-              </a>
-            ))}
-            <button
-              className="island-menu-link"
-              onClick={toggleTheme}
-              style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}
-            >
-              <span className="island-menu-link-number">0{NAV_LINKS.length + 1}</span>
-              Theme: {isDark ? 'Dark' : 'Light'}
-            </button>
-            <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, '#contact')}
-              className="island-menu-cta"
-              style={{ animationDelay: `${NAV_LINKS.length * 0.05}s` }}
-            >
-              Get in Touch
-            </a>
-          </div>
-        )}
       </nav>
 
-      {/* Backdrop for mobile menu */}
       {menuOpen && (
-        <div
-          className="island-backdrop"
-          onClick={() => setMenuOpen(false)}
-        />
+        <>
+          <div className="nav-backdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" />
+          <div
+            ref={panelRef}
+            id="mobile-navigation"
+            className="mobile-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+          >
+            {renderLinks(true)}
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="Toggle color theme"
+              title="Toggle color theme"
+            >
+              <Sun className="theme-icon sun-icon" aria-hidden="true" size={18} />
+              <Moon className="theme-icon moon-icon" aria-hidden="true" size={18} />
+            </button>
+            <a
+              className="button button-primary"
+              href="#contact"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollTo('#contact');
+              }}
+            >
+              Let&apos;s Talk
+            </a>
+          </div>
+        </>
       )}
     </>
   );
