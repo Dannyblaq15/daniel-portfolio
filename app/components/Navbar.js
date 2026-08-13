@@ -4,13 +4,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'Work', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'System Design', href: '#system-design' },
-  { label: 'Content', href: '#content' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Books', href: '#books' },
   { label: 'Lab', href: '#lab' },
-  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
@@ -123,11 +121,11 @@ export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
             className="wordmark"
             onClick={handleLogoInteraction}
             onDoubleClick={onLogoDoubleClick}
-            aria-label="DANNYBLAQ home"
+            aria-label="MAROD TECH home"
             title="Double-click for a small anti-gravity Easter egg"
           >
             <span className="wordmark-dot" aria-hidden="true" />
-            DANNYBLAQ
+            MAROD TECH
           </button>
 
           <div className="nav-links" aria-label="Primary">

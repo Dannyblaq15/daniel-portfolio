@@ -31,7 +31,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div>
-          <strong>DANNYBLAQ</strong>
+          <strong>MAROD TECH</strong>
           <p style={{ margin: '0.25rem 0 0' }}>© {year} Daniel Lewis. All rights reserved.</p>
         </div>
         <div className="social-links" style={{ margin: 0 }}>
