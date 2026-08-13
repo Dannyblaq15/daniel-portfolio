@@ -5,6 +5,7 @@ export const runtime = 'nodejs';
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 3;
 const buckets = new Map();
+const DIRECT_EMAIL = 'dl5357742@gmail.com';
 
 function sanitize(value = '') {
   return String(value)
@@ -20,6 +21,15 @@ function escapeHtml(value = '') {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function buildMailto(values) {
+  const subject = encodeURIComponent(`Portfolio contact: ${values.subject}`);
+  const body = encodeURIComponent(
+    `Name: ${values.name}\nEmail: ${values.email}\n\n${values.message}`
+  );
+
+  return `mailto:${DIRECT_EMAIL}?subject=${subject}&body=${body}`;
 }
 
 function validate(values) {
@@ -86,7 +96,11 @@ export async function POST(request) {
 
   if (!apiKey || !to || !from) {
     return NextResponse.json(
-      { success: false, error: 'Contact email is not configured yet. Please use the direct email link.' },
+      {
+        success: false,
+        error: 'Email sending is not configured yet. Opening a prefilled email instead.',
+        mailto: buildMailto(values),
+      },
       { status: 503 }
     );
   }

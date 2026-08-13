@@ -62,6 +62,13 @@ export default function ContactSection() {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
+        if (response.status === 503 && data.mailto) {
+          window.location.href = data.mailto;
+          setStatus({ type: 'success', message: 'Opening your email app with this message ready to send.' });
+          requestAnimationFrame(() => statusRef.current?.focus());
+          return;
+        }
+
         throw new Error(data.error || 'The message could not be sent. Please try again.');
       }
 
