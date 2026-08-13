@@ -2,9 +2,42 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
-  title: 'Daniel Lewis — Software Developer & React Native Developer',
+  metadataBase: new URL('https://daniel-portfolio-mocha.vercel.app'),
+  title: {
+    default: 'Daniel Lewis — Software & React Native Developer',
+    template: '%s | Daniel Lewis',
+  },
   description:
-    "Daniel Lewis — Software Developer based in Lagos, Nigeria. Building responsive web and mobile applications with JavaScript and React Native. Currently training as a Huawei Native Developer.",
+    'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
+  keywords: [
+    'Daniel Lewis',
+    'Dannyblaq15',
+    'software developer',
+    'React Native developer',
+    'frontend developer',
+    'mobile app developer',
+    'Next.js developer',
+    'Flutter developer',
+    'portfolio',
+  ],
+  authors: [{ name: 'Daniel Lewis', url: 'https://daniel-portfolio-mocha.vercel.app/' }],
+  creator: 'Daniel Lewis',
+  publisher: 'Daniel Lewis',
+  category: 'technology',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   icons: {
     icon: '/favicon.ico?v=2',
     shortcut: '/favicon.ico?v=2',
@@ -12,9 +45,65 @@ export const metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Daniel Lewis | Portfolio',
-    description: "Software Developer & React Native Developer based in Lagos, Nigeria. Building web and mobile apps with JavaScript and React Native.",
+    title: 'Daniel Lewis — Software & React Native Developer',
+    description:
+      'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
+    url: '/',
+    siteName: 'Daniel Lewis Portfolio',
+    images: [
+      {
+        url: '/icon-512.png',
+        width: 512,
+        height: 512,
+        alt: 'Daniel Lewis portfolio icon',
+      },
+    ],
+    locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Daniel Lewis — Software & React Native Developer',
+    description:
+      'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
+    images: ['/icon-512.png'],
+  },
+};
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Daniel Lewis',
+  alternateName: 'Dannyblaq',
+  url: 'https://daniel-portfolio-mocha.vercel.app/',
+  image: 'https://daniel-portfolio-mocha.vercel.app/daniel-photo.jpg',
+  jobTitle: 'Software & React Native Developer',
+  sameAs: [
+    'https://github.com/Dannyblaq15',
+    'https://www.linkedin.com/in/daniel-lewis-739635232/',
+  ],
+  knowsAbout: [
+    'Software development',
+    'React Native',
+    'JavaScript',
+    'TypeScript',
+    'Next.js',
+    'Flutter',
+    'Mobile applications',
+    'Responsive web design',
+  ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Daniel Lewis Portfolio',
+  url: 'https://daniel-portfolio-mocha.vercel.app/',
+  description:
+    'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
+  author: {
+    '@type': 'Person',
+    name: 'Daniel Lewis',
   },
 };
 
@@ -49,6 +138,12 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([personJsonLd, websiteJsonLd]),
+          }}
+        />
         <Analytics />
         {/* Bootstrap JS */}
         <script

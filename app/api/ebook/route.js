@@ -129,7 +129,7 @@ export async function POST(request) {
                 <p><strong>Book:</strong> ${bookTitle}</p>
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Time:</strong> ${new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' })}</p>
+                <p><strong>Time:</strong> ${new Date().toISOString()}</p>
                 <hr/>
                 <p style="color:#888;font-size:0.8rem">From your portfolio — ${bookTitle} download</p>
               </div>

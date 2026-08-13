@@ -2,9 +2,6 @@ import { Resend } from 'resend';
 import { EmailTemplate } from '../../../components/email-template';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const CONTACT_RECEIVER = process.env.CONTACT_RECEIVER || 'lewisdaniel960@gmail.com';
-
 export async function POST(req: Request) {
   let body;
   try {
@@ -19,24 +16,27 @@ export async function POST(req: Request) {
     message?: string;
   };
 
+  if (!process.env.RESEND_API_KEY || !process.env.CONTACT_TO_EMAIL || !process.env.CONTACT_FROM_EMAIL) {
+    return NextResponse.json({ error: 'Email is not configured.' }, { status: 503 });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const emailReact = <EmailTemplate firstName={firstName} message={message} />;
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to: [CONTACT_RECEIVER],
+      from: process.env.CONTACT_FROM_EMAIL,
+      to: [process.env.CONTACT_TO_EMAIL],
       replyTo: email,
       subject: `New contact from ${firstName}`,
       react: emailReact,
     });
 
     if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json(error, { status: 400 });
+      return NextResponse.json({ error: 'Email provider rejected the message.' }, { status: 400 });
     }
     return NextResponse.json(data);
   } catch (e) {
-    console.error(e);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

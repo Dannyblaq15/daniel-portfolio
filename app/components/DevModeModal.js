@@ -12,9 +12,9 @@ const DEFAULT_CSS = `/* Live CSS Editor — changes apply instantly! */
 
 /* Try changing the accent color: */
 :root {
-  --cyan: #D85A21;
-  --violet: #8B4513;
-  --bg-primary: #F5F5DC;
+  --color-primary: #C94F16;
+  --color-background: #FFF8F1;
+  --color-surface: #FFFFFF;
 }
 
 /* Or make the body glow: */
@@ -112,8 +112,8 @@ export default function DevModeModal({ onClose }) {
           fontSize: '0.72rem', color: '#6B7280', lineHeight: 1.6,
         }}>
           <span style={{ color: '#D85A21', fontWeight: 700 }}>Tips: </span>
-          Change <code style={{ color: '#8B4513' }}>--cyan</code> or <code style={{ color: '#8B4513' }}>--violet</code> to retheme instantly.
-          Add <code style={{ color: '#8B4513' }}>animation: float 2s ease-in-out infinite</code> to any selector. Press{' '}
+          Change <code style={{ color: '#8B4513' }}>--color-primary</code> or <code style={{ color: '#8B4513' }}>--color-background</code> to retheme instantly.
+          Add a tiny transform or border experiment to any selector. Press{' '}
           <kbd style={{ background: '#111', border: '1px solid #333', borderRadius: 4, padding: '0 4px', fontSize: '0.65rem' }}>
             Ctrl+Enter
           </kbd>{' '}to apply.
@@ -154,7 +154,7 @@ export default function DevModeModal({ onClose }) {
             onClick={() => {
               setCss(`/* CHAOS MODE ⚡ */
 body { animation: fullAntiGravity 4s ease-in-out infinite; }
-.section-title { animation: holoBorder 2s ease infinite; background-size: 300% 300%; }
+.section-title { color: var(--color-primary); }
 .project-card { animation: float 3s ease-in-out infinite; }
 nav { animation: float 2s ease-in-out infinite; }
 `);

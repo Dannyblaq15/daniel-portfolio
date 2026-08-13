@@ -1,176 +1,206 @@
 'use client';
-import { useState, useRef } from 'react';
+
+import { useMemo, useRef, useState } from 'react';
+
+const INITIAL_FIELDS = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+  company: '',
+};
+
+const LIMITS = {
+  name: [2, 80],
+  subject: [3, 120],
+  message: [20, 1200],
+};
+
+function validate(fields) {
+  const errors = {};
+  if (fields.name.trim().length < LIMITS.name[0]) errors.name = 'Please enter your name.';
+  if (fields.name.trim().length > LIMITS.name[1]) errors.name = 'Name is too long.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) errors.email = 'Please enter a valid email address.';
+  if (fields.subject.trim().length < LIMITS.subject[0]) errors.subject = 'Please add a short subject.';
+  if (fields.subject.trim().length > LIMITS.subject[1]) errors.subject = 'Subject is too long.';
+  if (fields.message.trim().length < LIMITS.message[0]) errors.message = 'Message should be at least 20 characters.';
+  if (fields.message.trim().length > LIMITS.message[1]) errors.message = 'Message is too long.';
+  return errors;
+}
 
 export default function ContactSection() {
-  const [fields, setFields] = useState({ name: '', email: '', subject: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
-  const [floating, setFloating] = useState(false);
-  const formRef = useRef(null);
+  const [fields, setFields] = useState(INITIAL_FIELDS);
+  const [touched, setTouched] = useState({});
+  const [status, setStatus] = useState({ type: 'idle', message: '' });
+  const statusRef = useRef(null);
+  const errors = useMemo(() => validate(fields), [fields]);
+  const canSubmit = Object.keys(errors).length === 0 && status.type !== 'loading';
 
-  const handleChange = (e) => setFields({ ...fields, [e.target.name]: e.target.value });
+  const updateField = (event) => {
+    const { name, value } = event.target;
+    setFields((current) => ({ ...current, [name]: value }));
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFloating(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setTouched({ name: true, email: true, subject: true, message: true });
+    const currentErrors = validate(fields);
+    if (Object.keys(currentErrors).length) {
+      setStatus({ type: 'error', message: 'Please fix the highlighted fields before sending.' });
+      statusRef.current?.focus();
+      return;
+    }
+
+    setStatus({ type: 'loading', message: 'Sending your message...' });
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(fields),
       });
+      const data = await response.json().catch(() => ({}));
 
-      if (response.ok) {
-        // Animate form away then show success
-        setTimeout(() => {
-          setSubmitted(true);
-          setFloating(false);
-        }, 700);
-      } else {
-        console.error('Failed to submit form');
-        setFloating(false);
+      if (!response.ok) {
+        throw new Error(data.error || 'The message could not be sent. Please try again.');
       }
-    } catch (err) {
-      console.error('An error occurred during submission:', err);
-      setFloating(false);
+
+      setFields(INITIAL_FIELDS);
+      setTouched({});
+      setStatus({ type: 'success', message: 'Thanks — your message has been sent.' });
+      requestAnimationFrame(() => statusRef.current?.focus());
+    } catch (error) {
+      setStatus({ type: 'error', message: error.message || 'Something went wrong. Please retry or use the email link.' });
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   };
 
+  const showError = (name) => touched[name] && errors[name];
+
   return (
-    <section id="contact" className="section-padding" style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-8 col-xl-7">
-            <div className="text-center mb-5 reveal">
-              <p className="section-eyebrow">Contact</p>
-              <h2 style={{ color: 'var(--cyan)' }} className="section-title">Let&apos;s Build Something<br />That Scales</h2>
-              <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem', marginTop: '1rem', lineHeight: 1.7 }}>
-                Whether you have a project in mind, a question, or just want to connect — I&apos;d love to hear from you.
-              </p>
-            </div>
+    <section id="contact" className="section">
+      <div className="container contact-layout">
+        <div className="section-header reveal">
+          <p className="section-eyebrow">Contact</p>
+          <h2 className="section-title">Let&apos;s Build Something Useful</h2>
+          <p className="section-copy">
+            Have a project, role, collaboration, or technical idea in mind? Send me a message and I&apos;ll get back to you.
+          </p>
 
-            <div className="glass reveal" style={{ borderRadius: 24, padding: 'clamp(1.5rem, 4vw, 2.5rem)', animationDelay: '0.1s' }}>
-              {submitted ? (
-                <div className="contact-success">
-                  <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>🚀</div>
-                  <h3 style={{
-                    fontSize: '1.6rem', fontWeight: 900, marginBottom: '0.5rem',
-                    background: 'linear-gradient(135deg, #D85A21, #8B4513)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-                  }}>Message Launched!</h3>
-                  <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem', lineHeight: 1.7 }}>
-                    Your message is now floating through the digital cosmos. I&apos;ll catch it and get back to you within 24 hours.
-                  </p>
-                  <button
-                    onClick={() => { setSubmitted(false); setFields({ name: '', email: '', subject: '', message: '' }); }}
-                    className="magnetic-btn secondary"
-                    style={{ marginTop: '1.5rem', border: '1px solid rgba(216,90,33,0.3)' }}
-                  >
-                    Send Another ↑
-                  </button>
-                </div>
-              ) : (
-                <form
-                  ref={formRef}
-                  onSubmit={handleSubmit}
-                  style={{
-                    transition: 'transform 0.7s cubic-bezier(0.23,1,0.32,1), opacity 0.7s',
-                    transform: floating ? 'translateY(-120px)' : 'none',
-                    opacity: floating ? 0 : 1,
-                  }}
-                  noValidate
-                >
-                  <div className="row g-3">
-                    {/* Name */}
-                    <div className="col-sm-6">
-                      <div className="floating-label-wrap">
-                        <input
-                          type="text"
-                          name="name"
-                          id="contact-name"
-                          className="floating-label-input"
-                          value={fields.name}
-                          onChange={handleChange}
-                          placeholder="Your Name"
-                          required
-                          autoComplete="name"
-                        />
-                        <label htmlFor="contact-name" className="floating-label">Your Name</label>
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="col-sm-6">
-                      <div className="floating-label-wrap">
-                        <input
-                          type="email"
-                          name="email"
-                          id="contact-email"
-                          className="floating-label-input"
-                          value={fields.email}
-                          onChange={handleChange}
-                          placeholder="Email Address"
-                          required
-                          autoComplete="email"
-                        />
-                        <label htmlFor="contact-email" className="floating-label">Email Address</label>
-                      </div>
-                    </div>
-
-                    {/* Subject */}
-                    <div className="col-12">
-                      <div className="floating-label-wrap">
-                        <input
-                          type="text"
-                          name="subject"
-                          id="contact-subject"
-                          className="floating-label-input"
-                          value={fields.subject}
-                          onChange={handleChange}
-                          placeholder="Subject"
-                          autoComplete="off"
-                        />
-                        <label htmlFor="contact-subject" className="floating-label">Subject</label>
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    <div className="col-12">
-                      <div className="floating-label-wrap">
-                        <textarea
-                          name="message"
-                          id="contact-message"
-                          className="floating-label-input floating-label-textarea"
-                          value={fields.message}
-                          onChange={handleChange}
-                          placeholder="Your Message"
-                          required
-                        />
-                        <label htmlFor="contact-message" className="floating-label">Your Message</label>
-                      </div>
-                    </div>
-
-                    {/* Submit */}
-                    <div className="col-12 text-center pt-1">
-                      <button
-                        type="submit"
-                        className="magnetic-btn primary"
-                        style={{ fontSize: '0.9rem', padding: '0.85rem 2.5rem' }}
-                        disabled={floating}
-                      >
-                        {floating ? 'Launching…' : 'Send Message ↑'}
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              )}
-            </div>
-
-
+          <div className="contact-links" style={{ marginTop: '1.25rem' }}>
+            <a className="button button-secondary" href="mailto:dl5357742@gmail.com">Email Daniel</a>
+            <a className="button button-secondary" href="https://github.com/Dannyblaq15" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a className="button button-secondary" href="https://www.linkedin.com/in/daniel-lewis-739635232/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
+
+          <p className="privacy-note" style={{ marginTop: '1rem' }}>
+            Privacy note: your message is used only to respond to your inquiry.
+          </p>
         </div>
+
+        <form className="card contact-form reveal" onSubmit={handleSubmit} noValidate>
+          <div className="honeypot" aria-hidden="true">
+            <label htmlFor="company">Company</label>
+            <input id="company" name="company" tabIndex="-1" autoComplete="off" value={fields.company} onChange={updateField} />
+          </div>
+
+          <div
+            ref={statusRef}
+            className={`status-region ${status.type === 'success' ? 'success' : ''} ${status.type === 'error' ? 'error' : ''}`}
+            tabIndex="-1"
+            role="status"
+            aria-live="polite"
+          >
+            {status.message || 'All fields marked with an asterisk are required.'}
+          </div>
+
+          <div className="form-grid">
+            <div className="field">
+              <label htmlFor="contact-name">Name <span className="required">*</span></label>
+              <input
+                id="contact-name"
+                name="name"
+                value={fields.name}
+                onChange={updateField}
+                onBlur={() => setTouched((current) => ({ ...current, name: true }))}
+                placeholder="Daniel Lewis"
+                autoComplete="name"
+                required
+                minLength={LIMITS.name[0]}
+                maxLength={LIMITS.name[1]}
+                aria-invalid={Boolean(showError('name'))}
+                aria-describedby="contact-name-error"
+              />
+              <p id="contact-name-error" className="field-error">{showError('name') || ''}</p>
+            </div>
+
+            <div className="field">
+              <label htmlFor="contact-email">Email <span className="required">*</span></label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                value={fields.email}
+                onChange={updateField}
+                onBlur={() => setTouched((current) => ({ ...current, email: true }))}
+                placeholder="you@example.com"
+                autoComplete="email"
+                required
+                aria-invalid={Boolean(showError('email'))}
+                aria-describedby="contact-email-error"
+              />
+              <p id="contact-email-error" className="field-error">{showError('email') || ''}</p>
+            </div>
+
+            <div className="field full">
+              <label htmlFor="contact-subject">Subject <span className="required">*</span></label>
+              <input
+                id="contact-subject"
+                name="subject"
+                value={fields.subject}
+                onChange={updateField}
+                onBlur={() => setTouched((current) => ({ ...current, subject: true }))}
+                placeholder="Project, role, collaboration, or idea"
+                required
+                minLength={LIMITS.subject[0]}
+                maxLength={LIMITS.subject[1]}
+                aria-invalid={Boolean(showError('subject'))}
+                aria-describedby="contact-subject-error"
+              />
+              <p id="contact-subject-error" className="field-error">{showError('subject') || ''}</p>
+            </div>
+
+            <div className="field full">
+              <label htmlFor="contact-message">Message <span className="required">*</span></label>
+              <textarea
+                id="contact-message"
+                name="message"
+                value={fields.message}
+                onChange={updateField}
+                onBlur={() => setTouched((current) => ({ ...current, message: true }))}
+                placeholder="Tell me what you are building, hiring for, or exploring."
+                required
+                minLength={LIMITS.message[0]}
+                maxLength={LIMITS.message[1]}
+                aria-invalid={Boolean(showError('message'))}
+                aria-describedby="contact-message-error contact-message-count"
+              />
+              <p id="contact-message-error" className="field-error">{showError('message') || ''}</p>
+              <span id="contact-message-count" className="char-count">{fields.message.length}/{LIMITS.message[1]} characters</span>
+            </div>
+          </div>
+
+          <div className="form-foot">
+            <button type="submit" className="button button-primary" disabled={!canSubmit}>
+              {status.type === 'loading' ? 'Sending...' : 'Send Message'}
+            </button>
+            {status.type === 'error' && (
+              <button type="button" className="button button-secondary" onClick={handleSubmit}>
+                Retry
+              </button>
+            )}
+          </div>
+        </form>
       </div>
     </section>
   );
