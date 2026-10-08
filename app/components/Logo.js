@@ -1,0 +1,55 @@
+'use client';
+
+export function LogoIcon({ size = 26, className = '', ...props }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      width={size}
+      height={size}
+      fill="none"
+      className={`logo-icon-svg ${className}`}
+      aria-hidden="true"
+      {...props}
+    >
+      <defs>
+        <linearGradient id="logo-m-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFA066" />
+          <stop offset="40%" stopColor="#FF7A33" />
+          <stop offset="100%" stopColor="#D85A21" />
+        </linearGradient>
+        <linearGradient id="logo-diamond-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#FFC199" />
+          <stop offset="100%" stopColor="#FF5A1F" />
+        </linearGradient>
+        <radialGradient id="logo-ambient-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#FF7A33" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#D85A21" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Rounded Frame */}
+      <rect width="32" height="32" rx="7.5" fill="#140E0A" />
+      <rect width="32" height="32" rx="7.5" fill="none" stroke="rgba(216,90,33,0.35)" strokeWidth="1" />
+      <circle cx="16" cy="16" r="13" fill="url(#logo-ambient-glow)" />
+
+      {/* Geometric "M" Glyph */}
+      <path
+        d="M 6.5 24 V 9.5 C 6.5 8.7 7.2 8 8 8 H 9.5 C 10.3 8 11 8.5 11.4 9.2 L 16 16.5 L 20.6 9.2 C 21 8.5 21.7 8 22.5 8 H 24 C 24.8 8 25.5 8.7 25.5 9.5 V 24 C 25.5 24.6 25.1 25 24.5 25 H 22.5 C 21.9 25 21.5 24.6 21.5 24 V 14.5 L 17.6 20.2 C 16.9 21.2 15.1 21.2 14.4 20.2 L 10.5 14.5 V 24 C 10.5 24.6 10.1 25 9.5 25 H 7.5 C 6.9 25 6.5 24.6 6.5 24 Z"
+        fill="url(#logo-m-grad)"
+      />
+
+      {/* Center Apex Diamond Accent */}
+      <polygon points="16,10.5 17.8,13 16,15.5 14.2,13" fill="url(#logo-diamond-grad)" />
+    </svg>
+  );
+}
+
+export default function Logo({ size = 26, showText = true, className = '', textClassName = '' }) {
+  return (
+    <span className={`brand-logo-container ${className}`}>
+      <LogoIcon size={size} />
+      {showText && <span className={`brand-logo-text ${textClassName}`}>MAROD TECH</span>}
+    </span>
+  );
+}

@@ -298,6 +298,37 @@ button {
   padding: 0.55rem 0.55rem 0.55rem 0;
   text-transform: uppercase;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wordmark:hover .logo-icon-svg {
+  transform: scale(1.08) rotate(-2deg);
+  filter: drop-shadow(0 0 10px rgba(216, 90, 33, 0.55));
+}
+
+.logo-icon-svg {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  border-radius: 6px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.brand-logo-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.brand-logo-text {
+  font-size: 0.95rem;
+  letter-spacing: 0.22em;
 }
 
 .wordmark-dot {
@@ -1276,6 +1307,7 @@ button {
   .wordmark {
     font-size: 0.83rem;
     letter-spacing: 0.16em;
+    gap: 0.5rem;
   }
 
   .wordmark-dot {

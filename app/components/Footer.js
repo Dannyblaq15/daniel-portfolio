@@ -1,6 +1,7 @@
 'use client';
 
 import { Mail } from 'lucide-react';
+import Logo from './Logo';
 
 function GitHubIcon(props) {
   return (
@@ -31,8 +32,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div>
-          <strong>MAROD TECH</strong>
-          <p style={{ margin: '0.25rem 0 0' }}>© {year} Daniel Lewis. All rights reserved.</p>
+          <Logo size={22} />
+          <p style={{ margin: '0.45rem 0 0' }}>© {year} Daniel Lewis. All rights reserved.</p>
         </div>
         <div className="social-links" style={{ margin: 0 }}>
           {LINKS.map(({ label, href, Icon }) => (

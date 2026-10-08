@@ -39,8 +39,11 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico?v=2',
-    shortcut: '/favicon.ico?v=2',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico?v=2' },
+    ],
+    shortcut: '/favicon.svg',
     apple: '/apple-touch-icon.png?v=2',
   },
   manifest: '/manifest.json',

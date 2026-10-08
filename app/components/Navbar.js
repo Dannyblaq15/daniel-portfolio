@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
+import { LogoIcon } from './Logo';
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
@@ -124,8 +125,8 @@ export default function Navbar({ onLogoDoubleClick, onLogoClick }) {
             aria-label="MAROD TECH home"
             title="Double-click for a small anti-gravity Easter egg"
           >
-            <span className="wordmark-dot" aria-hidden="true" />
-            MAROD TECH
+            <LogoIcon size={24} className="wordmark-icon" />
+            <span className="wordmark-text">MAROD TECH</span>
           </button>
 
           <div className="nav-links" aria-label="Primary">
