@@ -14,7 +14,7 @@ export const metadata = {
     'Dannyblaq15',
   ],
   alternates: {
-    canonical: 'https://daniel-portfolio-mocha.vercel.app/',
+    canonical: 'https://daniel-portfolio-geh5.vercel.app/',
   },
   robots: {
     index: true,
@@ -24,7 +24,7 @@ export const metadata = {
     title: 'Daniel Lewis — Software & React Native Developer',
     description:
       'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
-    url: 'https://daniel-portfolio-mocha.vercel.app/',
+    url: 'https://daniel-portfolio-geh5.vercel.app/',
     siteName: 'Daniel Lewis Portfolio',
     images: [
       {

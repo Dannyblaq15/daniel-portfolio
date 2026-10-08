@@ -2,7 +2,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
-  metadataBase: new URL('https://daniel-portfolio-mocha.vercel.app'),
+  metadataBase: new URL('https://daniel-portfolio-geh5.vercel.app'),
   title: {
     default: 'Daniel Lewis — Software & React Native Developer',
     template: '%s | Daniel Lewis',
@@ -20,7 +20,7 @@ export const metadata = {
     'Flutter developer',
     'portfolio',
   ],
-  authors: [{ name: 'Daniel Lewis', url: 'https://daniel-portfolio-mocha.vercel.app/' }],
+  authors: [{ name: 'Daniel Lewis', url: 'https://daniel-portfolio-geh5.vercel.app/' }],
   creator: 'Daniel Lewis',
   publisher: 'Daniel Lewis',
   category: 'technology',
@@ -75,8 +75,8 @@ const personJsonLd = {
   '@type': 'Person',
   name: 'Daniel Lewis',
   alternateName: 'Dannyblaq',
-  url: 'https://daniel-portfolio-mocha.vercel.app/',
-  image: 'https://daniel-portfolio-mocha.vercel.app/daniel-photo.jpg',
+  url: 'https://daniel-portfolio-geh5.vercel.app/',
+  image: 'https://daniel-portfolio-geh5.vercel.app/daniel-photo.jpg',
   jobTitle: 'Software & React Native Developer',
   sameAs: [
     'https://github.com/Dannyblaq15',
@@ -98,7 +98,7 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Daniel Lewis Portfolio',
-  url: 'https://daniel-portfolio-mocha.vercel.app/',
+  url: 'https://daniel-portfolio-geh5.vercel.app/',
   description:
     'Portfolio of Daniel Lewis, a software and React Native developer building practical, responsive web and mobile products.',
   author: {

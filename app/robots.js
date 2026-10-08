@@ -4,7 +4,7 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://daniel-portfolio-mocha.vercel.app/sitemap.xml',
-    host: 'https://daniel-portfolio-mocha.vercel.app',
+    sitemap: 'https://daniel-portfolio-geh5.vercel.app/sitemap.xml',
+    host: 'https://daniel-portfolio-geh5.vercel.app',
   };
 }
