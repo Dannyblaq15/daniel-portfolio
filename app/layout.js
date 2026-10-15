@@ -83,7 +83,7 @@ const personJsonLd = {
   jobTitle: 'Software & React Native Developer',
   sameAs: [
     'https://github.com/Dannyblaq15',
-    'https://www.linkedin.com/in/daniel-lewis-739635232/',
+    'https://www.linkedin.com/in/daniellewis-tech/',
   ],
   knowsAbout: [
     'Software development',

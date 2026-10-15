@@ -21,7 +21,7 @@ function LinkedInIcon(props) {
 
 const LINKS = [
   { label: 'GitHub', href: 'https://github.com/Dannyblaq15', Icon: GitHubIcon },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-lewis-739635232/', Icon: LinkedInIcon },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniellewis-tech/', Icon: LinkedInIcon },
   { label: 'Email Daniel', href: 'mailto:dl5357742@gmail.com', Icon: Mail },
 ];
 

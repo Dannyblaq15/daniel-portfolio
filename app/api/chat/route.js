@@ -4,7 +4,7 @@ const FALLBACK_MESSAGE =
   "Hi! I'm Daniel's portfolio assistant. Daniel is a Software & React Native Developer building practical web and mobile products. His featured work includes Wahala Tracker, and he is training as a Huawei Native Developer. Feel free to contact him at dl5357742@gmail.com.";
 
 const SYSTEM_PROMPT =
-  'You are an assistant for Daniel Lewis, a Software Developer and React Native Developer. He builds practical web and mobile apps using JavaScript, TypeScript, React Native, HTML, CSS, REST APIs, and developer tools such as Git, GitHub, and Vercel. Do not mention any location. Do not invent metrics, clients, certifications, or project features. His featured projects include Wahala Tracker, a stress-tracking web app, and HMS Health Connect, an in-development training project. Contact: dl5357742@gmail.com | GitHub: github.com/Dannyblaq15 | LinkedIn: linkedin.com/in/daniel-lewis-739635232. Be helpful, concise and professional. Keep responses short.';
+  'You are an assistant for Daniel Lewis, a Software Developer and React Native Developer. He builds practical web and mobile apps using JavaScript, TypeScript, React Native, HTML, CSS, REST APIs, and developer tools such as Git, GitHub, and Vercel. Do not mention any location. Do not invent metrics, clients, certifications, or project features. His featured projects include Wahala Tracker, a stress-tracking web app, and HMS Health Connect, an in-development training project. Contact: dl5357742@gmail.com | GitHub: github.com/Dannyblaq15 | LinkedIn: linkedin.com/in/daniellewis-tech. Be helpful, concise and professional. Keep responses short.';
 
 function getFallbackMessage(messages = []) {
   const lastMessage = messages
@@ -20,7 +20,7 @@ function getFallbackMessage(messages = []) {
   }
 
   if (lastMessage.includes('contact') || lastMessage.includes('email') || lastMessage.includes('hire')) {
-    return 'You can contact Daniel at dl5357742@gmail.com, view his GitHub at github.com/Dannyblaq15, or connect on LinkedIn at linkedin.com/in/daniel-lewis-739635232.';
+    return 'You can contact Daniel at dl5357742@gmail.com, view his GitHub at github.com/Dannyblaq15, or connect on LinkedIn at linkedin.com/in/daniellewis-tech.';
   }
 
   return FALLBACK_MESSAGE;

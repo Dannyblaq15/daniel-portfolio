@@ -97,7 +97,7 @@ export default function ContactSection() {
           <div className="contact-links" style={{ marginTop: '1.25rem' }}>
             <a className="button button-secondary" href="mailto:dl5357742@gmail.com">Email Daniel</a>
             <a className="button button-secondary" href="https://github.com/Dannyblaq15" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a className="button button-secondary" href="https://www.linkedin.com/in/daniel-lewis-739635232/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a className="button button-secondary" href="https://www.linkedin.com/in/daniellewis-tech/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
 
           <p className="privacy-note" style={{ marginTop: '1rem' }}>

@@ -6,7 +6,7 @@ const CV_PATH = '/Daniel-Lewis-CV.pdf';
 
 const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/Dannyblaq15', text: 'GH' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-lewis-739635232/', text: 'IN' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/daniellewis-tech/', text: 'IN' },
   { label: 'Email Daniel', href: 'mailto:dl5357742@gmail.com', text: '@' },
 ];
 
